@@ -1,0 +1,10 @@
+../Core/Src/w25q32.c:7:13:CS_LOW	1
+../Core/Src/w25q32.c:14:13:CS_HIGH	1
+../Core/Src/w25q32.c:23:6:W25Q32_Init	1
+../Core/Src/w25q32.c:32:6:W25Q32_WriteEnable	1
+../Core/Src/w25q32.c:48:16:ReadStatus	1
+../Core/Src/w25q32.c:72:13:WaitBusy	2
+../Core/Src/w25q32.c:79:10:W25Q32_ReadID	1
+../Core/Src/w25q32.c:105:6:W25Q32_SectorErase	1
+../Core/Src/w25q32.c:130:6:W25Q32_WritePage	1
+../Core/Src/w25q32.c:162:6:W25Q32_ReadData	1

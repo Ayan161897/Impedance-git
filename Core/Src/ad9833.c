@@ -40,12 +40,12 @@ void AD9833_Init(void)
  * @param reg: 0 or 1 (Frequency Register 0 or 1)
  * @param freqHz: Desired frequency in Hz
  */
-void AD9833_SetFrequency(uint8_t reg, uint32_t freqHz)
+void AD9833_SetFrequency(uint32_t freqHz)
 {
     uint32_t freqWord = (uint32_t)((freqHz * 268435456.0f) / 25000000.0f);  // 25 MHz MCLK
 
-    uint16_t cmdLSB = (reg ? 0x8000 : 0x4000) | (freqWord & 0x3FFF);
-    uint16_t cmdMSB = (reg ? 0x8000 : 0x4000) | ((freqWord >> 14) & 0x3FFF);
+    uint16_t cmdLSB = 0x4000 | (freqWord & 0x3FFF);
+    uint16_t cmdMSB = 0x4000 | ((freqWord >> 14) & 0x3FFF);
 
     AD9833_Write(cmdLSB);
     AD9833_Write(cmdMSB);
@@ -56,10 +56,10 @@ void AD9833_SetFrequency(uint8_t reg, uint32_t freqHz)
  * @param reg: 0 or 1 (Phase Register 0 or 1)
  * @param phaseDeg: Phase in degrees (0-360)
  */
-void AD9833_SetPhase(uint8_t reg, uint16_t phaseDeg)
+void AD9833_SetPhase(uint16_t phaseDeg)
 {
     uint16_t phaseWord = (uint16_t)((phaseDeg * 4096.0f) / 360.0f);
-    uint16_t cmd = (reg ? 0xE000 : 0xC000) | (phaseWord & 0x0FFF);
+    uint16_t cmd = 0xC000 | (phaseWord & 0x0FFF);
 
     AD9833_Write(cmd);
 }
@@ -118,7 +118,7 @@ void AD9833_FrequencySweep(uint32_t startHz, uint32_t endHz, uint32_t stepHz, ui
 {
     for (uint32_t f = startHz; f <= endHz; f += stepHz)
     {
-        AD9833_SetFrequency(0, f);
+        AD9833_SetFrequency(f);
         HAL_Delay(delayMs);
     }
 }

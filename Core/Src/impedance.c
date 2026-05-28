@@ -14,9 +14,7 @@ static uint16_t adcTIA[SAMPLES_PER_MEASUREMENT];
 void Imp_Init(void)
 {
     HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-    HAL_ADCEx_Calibration_Start(&hadc2, ADC_SINGLE_ENDED);
     HAL_ADC_Start(&hadc1);
-    HAL_ADC_Start(&hadc2);
 }
 
 BodePoint Imp_MeasureAtFrequency(uint32_t freqHz, float Rf, float Vin_peak)
@@ -36,9 +34,9 @@ BodePoint Imp_MeasureAtFrequency(uint32_t freqHz, float Rf, float Vin_peak)
         HAL_ADC_PollForConversion(&hadc1, 20);
         adcVin[i] = HAL_ADC_GetValue(&hadc1);
 
-        HAL_ADC_Start(&hadc2);
-        HAL_ADC_PollForConversion(&hadc2, 20);
-        adcTIA[i] = HAL_ADC_GetValue(&hadc2);
+        HAL_ADC_Start(&hadc1);
+        HAL_ADC_PollForConversion(&hadc1, 20);
+        adcTIA[i] = HAL_ADC_GetValue(&hadc1);
 
         float t = i * dt;
         float angle = omega * t;

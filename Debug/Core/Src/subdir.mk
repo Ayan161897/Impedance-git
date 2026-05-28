@@ -13,7 +13,8 @@ C_SRCS += \
 ../Core/Src/syscalls.c \
 ../Core/Src/sysmem.c \
 ../Core/Src/system_stm32f3xx.c \
-../Core/Src/uart_comm.c 
+../Core/Src/uart_comm.c \
+../Core/Src/w25q32.c 
 
 OBJS += \
 ./Core/Src/ad9833.o \
@@ -24,7 +25,8 @@ OBJS += \
 ./Core/Src/syscalls.o \
 ./Core/Src/sysmem.o \
 ./Core/Src/system_stm32f3xx.o \
-./Core/Src/uart_comm.o 
+./Core/Src/uart_comm.o \
+./Core/Src/w25q32.o 
 
 C_DEPS += \
 ./Core/Src/ad9833.d \
@@ -35,7 +37,8 @@ C_DEPS += \
 ./Core/Src/syscalls.d \
 ./Core/Src/sysmem.d \
 ./Core/Src/system_stm32f3xx.d \
-./Core/Src/uart_comm.d 
+./Core/Src/uart_comm.d \
+./Core/Src/w25q32.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -45,7 +48,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/ad9833.cyclo ./Core/Src/ad9833.d ./Core/Src/ad9833.o ./Core/Src/ad9833.su ./Core/Src/impedance.cyclo ./Core/Src/impedance.d ./Core/Src/impedance.o ./Core/Src/impedance.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32f3xx_hal_msp.cyclo ./Core/Src/stm32f3xx_hal_msp.d ./Core/Src/stm32f3xx_hal_msp.o ./Core/Src/stm32f3xx_hal_msp.su ./Core/Src/stm32f3xx_it.cyclo ./Core/Src/stm32f3xx_it.d ./Core/Src/stm32f3xx_it.o ./Core/Src/stm32f3xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f3xx.cyclo ./Core/Src/system_stm32f3xx.d ./Core/Src/system_stm32f3xx.o ./Core/Src/system_stm32f3xx.su ./Core/Src/uart_comm.cyclo ./Core/Src/uart_comm.d ./Core/Src/uart_comm.o ./Core/Src/uart_comm.su
+	-$(RM) ./Core/Src/ad9833.cyclo ./Core/Src/ad9833.d ./Core/Src/ad9833.o ./Core/Src/ad9833.su ./Core/Src/impedance.cyclo ./Core/Src/impedance.d ./Core/Src/impedance.o ./Core/Src/impedance.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32f3xx_hal_msp.cyclo ./Core/Src/stm32f3xx_hal_msp.d ./Core/Src/stm32f3xx_hal_msp.o ./Core/Src/stm32f3xx_hal_msp.su ./Core/Src/stm32f3xx_it.cyclo ./Core/Src/stm32f3xx_it.d ./Core/Src/stm32f3xx_it.o ./Core/Src/stm32f3xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32f3xx.cyclo ./Core/Src/system_stm32f3xx.d ./Core/Src/system_stm32f3xx.o ./Core/Src/system_stm32f3xx.su ./Core/Src/uart_comm.cyclo ./Core/Src/uart_comm.d ./Core/Src/uart_comm.o ./Core/Src/uart_comm.su ./Core/Src/w25q32.cyclo ./Core/Src/w25q32.d ./Core/Src/w25q32.o ./Core/Src/w25q32.su
 
 .PHONY: clean-Core-2f-Src
 
