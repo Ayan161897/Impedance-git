@@ -1,0 +1,2 @@
+../Core/Src/impedance.c:14:6:Imp_Init	8	static
+../Core/Src/impedance.c:22:11:Imp_MeasureAtFrequency	120	static

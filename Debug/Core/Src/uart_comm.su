@@ -1,0 +1,6 @@
+../Core/Src/uart_comm.c:14:13:Process_Start_Command	4	static
+../Core/Src/uart_comm.c:18:13:Process_Stop_Command	4	static
+../Core/Src/uart_comm.c:34:6:UART_Comm_Init	16	static
+../Core/Src/uart_comm.c:48:6:UART_SendString	16	static
+../Core/Src/uart_comm.c:61:6:UART_SendImpedanceData	184	static
+../Core/Src/uart_comm.c:107:6:UART_ProcessCommand	8	static

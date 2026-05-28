@@ -1,0 +1,2 @@
+../Core/Src/impedance.c:14:6:Imp_Init	1
+../Core/Src/impedance.c:22:11:Imp_MeasureAtFrequency	5

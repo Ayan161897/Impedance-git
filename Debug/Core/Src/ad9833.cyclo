@@ -1,0 +1,8 @@
+../Core/Src/ad9833.c:20:13:AD9833_Write	1
+../Core/Src/ad9833.c:30:6:AD9833_Init	1
+../Core/Src/ad9833.c:43:6:AD9833_SetFrequency	3
+../Core/Src/ad9833.c:59:6:AD9833_SetPhase	2
+../Core/Src/ad9833.c:70:6:AD9833_SelectFrequencyRegister	2
+../Core/Src/ad9833.c:80:6:AD9833_SetMode	3
+../Core/Src/ad9833.c:106:6:AD9833_OutputEnable	2
+../Core/Src/ad9833.c:117:6:AD9833_FrequencySweep	2

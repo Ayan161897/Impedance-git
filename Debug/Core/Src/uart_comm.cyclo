@@ -1,0 +1,6 @@
+../Core/Src/uart_comm.c:14:13:Process_Start_Command	1
+../Core/Src/uart_comm.c:18:13:Process_Stop_Command	1
+../Core/Src/uart_comm.c:34:6:UART_Comm_Init	1
+../Core/Src/uart_comm.c:48:6:UART_SendString	2
+../Core/Src/uart_comm.c:61:6:UART_SendImpedanceData	3
+../Core/Src/uart_comm.c:107:6:UART_ProcessCommand	4

@@ -9,6 +9,8 @@
 "./Core/Src/uart_comm.o"
 "./Core/Startup/startup_stm32f303cctx.o"
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal.o"
+"./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc.o"
+"./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_adc_ex.o"
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.o"
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_dma.o"
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.o"
@@ -21,3 +23,4 @@
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr_ex.o"
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc.o"
 "./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_rcc_ex.o"
+"./Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_spi.o"
