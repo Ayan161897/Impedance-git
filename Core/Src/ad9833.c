@@ -1,125 +1,206 @@
 /**
  ******************************************************************************
  * @file           : ad9833.c
- * @brief          : AD9833 DDS Waveform Generator Driver
+ * @brief          : AD9833 DDS Driver
  ******************************************************************************
  */
 
 #include "ad9833.h"
 #include "main.h"
-#include <stdio.h>
-
-
 
 extern SPI_HandleTypeDef hspi1;
 
-/* FSYNC Pin Control */
-#define FSYNC_LOW()   HAL_GPIO_WritePin(AD9833_FSYNC_GPIO_Port, AD9833_FSYNC_Pin, GPIO_PIN_RESET)
-#define FSYNC_HIGH()  HAL_GPIO_WritePin(AD9833_FSYNC_GPIO_Port, AD9833_FSYNC_Pin, GPIO_PIN_SET)
+/* =========================================================
+   FSYNC CONTROL
+   ========================================================= */
 
-static void AD9833_Write(uint16_t data)
+#define FSYNC_LOW() \
+    HAL_GPIO_WritePin(AD9833_FSYNC_GPIO_Port, \
+                      AD9833_FSYNC_Pin, \
+                      GPIO_PIN_RESET)
+
+#define FSYNC_HIGH() \
+    HAL_GPIO_WritePin(AD9833_FSYNC_GPIO_Port, \
+                      AD9833_FSYNC_Pin, \
+                      GPIO_PIN_SET)
+
+/* =========================================================
+   WRITE REGISTER
+   ========================================================= */
+
+void AD9833_WriteRegister(uint16_t data)
 {
+    uint8_t tx[2];
+
+    tx[0] = (data >> 8) & 0xFF;
+    tx[1] = data & 0xFF;
+
     FSYNC_LOW();
-    HAL_SPI_Transmit(&hspi1, (uint8_t*)&data, 1, HAL_MAX_DELAY);
+
+    HAL_SPI_Transmit(&hspi1,
+                     tx,
+                     2,
+                     HAL_MAX_DELAY);
+
     FSYNC_HIGH();
 }
 
-/**
- * @brief Initialize AD9833
- */
+/* =========================================================
+   RESET
+   ========================================================= */
+
+void AD9833_Reset(void)
+{
+    AD9833_WriteRegister(AD9833_B28 | AD9833_RESET);
+}
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
+
 void AD9833_Init(void)
 {
-    AD9833_Write(0x0100);        // Reset + Control Register
+    AD9833_Reset();
+
     HAL_Delay(10);
-    AD9833_Write(0x0000);        // Clear reset bit
-    printf("AD9833 Initialized\r\n");
+
+    AD9833_SetFrequency(1000);
+
+    AD9833_SetPhase(0);
+
+    AD9833_SetSineOutput();
 }
 
-/**
- * @brief Set output frequency
- * @param reg: 0 or 1 (Frequency Register 0 or 1)
- * @param freqHz: Desired frequency in Hz
- */
-void AD9833_SetFrequency(uint32_t freqHz)
+/* =========================================================
+   SET FREQUENCY
+   ========================================================= */
+
+void AD9833_SetFrequency(uint32_t frequency)
 {
-    uint32_t freqWord = (uint32_t)((freqHz * 268435456.0f) / 25000000.0f);  // 25 MHz MCLK
+    uint32_t freqWord;
 
-    uint16_t cmdLSB = 0x4000 | (freqWord & 0x3FFF);
-    uint16_t cmdMSB = 0x4000 | ((freqWord >> 14) & 0x3FFF);
+    uint16_t lsb;
+    uint16_t msb;
 
-    AD9833_Write(cmdLSB);
-    AD9833_Write(cmdMSB);
+    freqWord =
+        (uint32_t)((double)frequency *
+        268435456.0 /
+        AD9833_MCLK);
+
+    lsb =
+        AD9833_FREQ0_REGISTER |
+        (freqWord & 0x3FFF);
+
+    msb =
+        AD9833_FREQ0_REGISTER |
+        ((freqWord >> 14) & 0x3FFF);
+
+    AD9833_WriteRegister(
+        AD9833_B28 | AD9833_RESET);
+
+    AD9833_WriteRegister(lsb);
+
+    AD9833_WriteRegister(msb);
+
+    AD9833_WriteRegister(
+        AD9833_B28);
 }
 
-/**
- * @brief Set phase shift
- * @param reg: 0 or 1 (Phase Register 0 or 1)
- * @param phaseDeg: Phase in degrees (0-360)
- */
-void AD9833_SetPhase(uint16_t phaseDeg)
-{
-    uint16_t phaseWord = (uint16_t)((phaseDeg * 4096.0f) / 360.0f);
-    uint16_t cmd = 0xC000 | (phaseWord & 0x0FFF);
+/* =========================================================
+   SET PHASE
+   ========================================================= */
 
-    AD9833_Write(cmd);
+void AD9833_SetPhase(uint16_t phase)
+{
+    uint16_t phaseWord;
+
+    phaseWord =
+        (uint16_t)((phase * 4096.0f) / 360.0f);
+
+    AD9833_WriteRegister(
+        AD9833_PHASE0_REGISTER |
+        (phaseWord & 0x0FFF));
 }
 
-/**
- * @brief Select which frequency register to use
- */
-void AD9833_SelectFrequencyRegister(uint8_t reg)
-{
-    uint16_t control = 0x2000;
-    if (reg) control |= 0x0800;     // FSELECT bit
-    AD9833_Write(control);
-}
+/* =========================================================
+   SET WAVEFORM
+   ========================================================= */
 
-/**
- * @brief Set waveform mode (Sine, Triangle, Square)
- */
-void AD9833_SetMode(AD9833_Mode mode)
+void AD9833_SetWaveform(AD9833_Mode mode)
 {
-    uint16_t control = 0x2000;      // Base control register
-
-    switch (mode)
+    switch(mode)
     {
         case AD9833_TRIANGLE:
-            control |= 0x0002;      // MODE bit
+
+            AD9833_WriteRegister(
+                AD9833_B28 |
+                AD9833_MODE);
+
             break;
 
         case AD9833_SQUARE:
-            control |= (1 << 5) | (1 << 8);  // OPBITEN + DIV2
+
+            AD9833_WriteRegister(
+                AD9833_B28 |
+                AD9833_OPBITEN |
+                AD9833_DIV2);
+
             break;
 
         case AD9833_SINE:
         default:
-            // Default is sine wave
+
+            AD9833_WriteRegister(
+                AD9833_B28);
+
             break;
     }
-
-    AD9833_Write(control);
 }
 
-/**
- * @brief Enable/Disable output
- */
-void AD9833_OutputEnable(uint8_t enable)
+/* =========================================================
+   SINE OUTPUT
+   ========================================================= */
+
+void AD9833_SetSineOutput(void)
 {
-    if (enable)
-        AD9833_Write(0x2000);      // Normal operation
-    else
-        AD9833_Write(0x2100);      // Sleep mode (reset bit)
+    AD9833_SetWaveform(AD9833_SINE);
 }
 
-/**
- * @brief Perform frequency sweep (useful for testing)
- */
-void AD9833_FrequencySweep(uint32_t startHz, uint32_t endHz, uint32_t stepHz, uint32_t delayMs)
+/* =========================================================
+   TRIANGLE OUTPUT
+   ========================================================= */
+
+void AD9833_SetTriangleOutput(void)
 {
-    for (uint32_t f = startHz; f <= endHz; f += stepHz)
+    AD9833_SetWaveform(AD9833_TRIANGLE);
+}
+
+/* =========================================================
+   SQUARE OUTPUT
+   ========================================================= */
+
+void AD9833_SetSquareOutput(void)
+{
+    AD9833_SetWaveform(AD9833_SQUARE);
+}
+
+/* =========================================================
+   FREQUENCY SWEEP
+   ========================================================= */
+
+void AD9833_FrequencySweep(uint32_t start_freq,
+                           uint32_t stop_freq,
+                           uint32_t step_freq,
+                           uint32_t delay_ms)
+{
+    uint32_t freq;
+
+    for(freq = start_freq;
+        freq <= stop_freq;
+        freq += step_freq)
     {
-        AD9833_SetFrequency(f);
-        HAL_Delay(delayMs);
+        AD9833_SetFrequency(freq);
+
+        HAL_Delay(delay_ms);
     }
 }
-

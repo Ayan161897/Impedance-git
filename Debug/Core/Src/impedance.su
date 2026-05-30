@@ -1,2 +1,5 @@
-../Core/Src/impedance.c:14:6:Imp_Init	8	static
-../Core/Src/impedance.c:20:11:Imp_MeasureAtFrequency	120	static
+../Core/Src/impedance.c:37:6:Imp_Init	8	static
+../Core/Src/impedance.c:47:6:Process_Impedance	80	static
+../Core/Src/impedance.c:151:11:Imp_MeasureAtFrequency	96	static
+../Core/Src/impedance.c:192:7:Imp_GetPhase	4	static
+../Core/Src/impedance.c:201:7:Imp_GetMagnitude	4	static

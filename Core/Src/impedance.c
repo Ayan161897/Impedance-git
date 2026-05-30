@@ -1,68 +1,204 @@
 #include "impedance.h"
 #include "main.h"
+
 #include <math.h>
+#include <stdio.h>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
 #endif
 
-#define SAMPLES_PER_MEASUREMENT  256
+/* =========================================================
+   GLOBAL BUFFERS
+   ========================================================= */
 
-static uint16_t adcVin[SAMPLES_PER_MEASUREMENT];
-static uint16_t adcTIA[SAMPLES_PER_MEASUREMENT];
+uint16_t adc_buffer[2 * SAMPLE_COUNT];
+
+float ref_samples[SAMPLE_COUNT];
+
+float sig_samples[SAMPLE_COUNT];
+
+/* =========================================================
+   GLOBAL RESULTS
+   ========================================================= */
+
+static float magnitude = 0.0f;
+
+static float phaseDeg = 0.0f;
+
+static float realPart = 0.0f;
+
+static float imagPart = 0.0f;
+
+/* =========================================================
+   INITIALIZATION
+   ========================================================= */
 
 void Imp_Init(void)
 {
-    HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
-    HAL_ADC_Start(&hadc1);
+    HAL_ADCEx_Calibration_Start(&hadc1,
+                                ADC_SINGLE_ENDED);
 }
 
-BodePoint Imp_MeasureAtFrequency(uint32_t freqHz, float Rf, float Vin_peak)
+/* =========================================================
+   PROCESS IMPEDANCE
+   ========================================================= */
+
+void Process_Impedance(float frequency)
 {
-    BodePoint p = {0.0f, 0.0f};
-    float sumReVin = 0.0f, sumImVin = 0.0f;
-    float sumReTIA = 0.0f, sumImTIA = 0.0f;
+    uint32_t i;
 
-    HAL_Delay(25);  // Settling
+    (void)frequency;
 
-    float dt = 1.0f / 100000.0f;           // 100 kSps example
-    float omega = 2.0f * (float)M_PI * freqHz;
+    float sumReRef = 0.0f;
+    float sumImRef = 0.0f;
+    float sumReSig = 0.0f;
+    float sumImSig = 0.0f;
 
-    for (int i = 0; i < SAMPLES_PER_MEASUREMENT; i++)
+    float refMean = 0.0f;
+    float sigMean = 0.0f;
+
+    const float ADC_VREF = 3.3f;
+    const float ADC_MAX  = 4095.0f;
+
+    HAL_ADC_Start_DMA(&hadc1,
+                      (uint32_t*)adc_buffer,
+                      2 * SAMPLE_COUNT);
+
+    HAL_Delay(20);
+
+    HAL_ADC_Stop_DMA(&hadc1);
+
+    for(i = 0; i < SAMPLE_COUNT; i++)
     {
-        HAL_ADC_Start(&hadc1);
-        HAL_ADC_PollForConversion(&hadc1, 20);
-        adcVin[i] = HAL_ADC_GetValue(&hadc1);
+        ref_samples[i] =
+            ((float)adc_buffer[2 * i] * ADC_VREF) / ADC_MAX;
 
-        HAL_ADC_Start(&hadc1);
-        HAL_ADC_PollForConversion(&hadc1, 20);
-        adcTIA[i] = HAL_ADC_GetValue(&hadc1);
+        sig_samples[i] =
+            ((float)adc_buffer[2 * i + 1] * ADC_VREF) / ADC_MAX;
 
-        float t = i * dt;
-        float angle = omega * t;
-
-        float vin  = (adcVin[i]  / 4095.0f) * 3.3f;
-        float vout = (adcTIA[i]  / 4095.0f) * 3.3f;
-
-        sumReVin += vin  * cosf(angle);
-        sumImVin += vin  * sinf(angle);
-        sumReTIA += vout * cosf(angle);
-        sumImTIA += vout * sinf(angle);
+        refMean += ref_samples[i];
+        sigMean += sig_samples[i];
     }
 
-    float N = (float)SAMPLES_PER_MEASUREMENT;
-    float magVin = sqrtf(sumReVin*sumReVin + sumImVin*sumImVin) * 2.0f / N;
-    float magTIA = sqrtf(sumReTIA*sumReTIA + sumImTIA*sumImTIA) * 2.0f / N;
+    refMean /= SAMPLE_COUNT;
+    sigMean /= SAMPLE_COUNT;
 
-    float I_peak = magTIA / Rf;
-    p.magnitude = (magVin > 0.001f) ? (Vin_peak / I_peak) : 999999.0f;
+    for(i = 0; i < SAMPLE_COUNT; i++)
+    {
+        ref_samples[i] -= refMean;
+        sig_samples[i] -= sigMean;
+    }
 
-    float phaseVin = atan2f(sumImVin, sumReVin) * 180.0f / M_PI;
-    float phaseTIA = atan2f(sumImTIA, sumReTIA) * 180.0f / M_PI;
-    p.phaseDeg = phaseTIA - phaseVin;
+    for(i = 0; i < SAMPLE_COUNT; i++)
+    {
+        float angle =
+            2.0f *
+            (float)M_PI *
+            ((float)i / SAMPLE_COUNT);
 
-    while (p.phaseDeg > 180.0f)  p.phaseDeg -= 360.0f;
-    while (p.phaseDeg < -180.0f) p.phaseDeg += 360.0f;
+        float cosVal = cosf(angle);
+        float sinVal = sinf(angle);
+
+        sumReRef += ref_samples[i] * cosVal;
+        sumImRef += ref_samples[i] * sinVal;
+
+        sumReSig += sig_samples[i] * cosVal;
+        sumImSig += sig_samples[i] * sinVal;
+    }
+
+    float magRef =
+        (2.0f / SAMPLE_COUNT) *
+        sqrtf((sumReRef * sumReRef) +
+              (sumImRef * sumImRef));
+
+    float magSig =
+        (2.0f / SAMPLE_COUNT) *
+        sqrtf((sumReSig * sumReSig) +
+              (sumImSig * sumImSig));
+
+    (void)magRef;
+
+    magnitude = magSig;
+
+    float phaseRef = atan2f(sumImRef, sumReRef);
+    float phaseSig = atan2f(sumImSig, sumReSig);
+
+    phaseDeg =
+        (phaseSig - phaseRef) *
+        (180.0f / (float)M_PI);
+
+    while(phaseDeg > 180.0f)
+        phaseDeg -= 360.0f;
+
+    while(phaseDeg < -180.0f)
+        phaseDeg += 360.0f;
+
+    realPart =
+        magnitude *
+        cosf(phaseDeg * (float)M_PI / 180.0f);
+
+    imagPart =
+        magnitude *
+        sinf(phaseDeg * (float)M_PI / 180.0f);
+
+}
+
+/* =========================================================
+   COMPLETE IMPEDANCE MEASUREMENT
+   ========================================================= */
+
+BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
+                                 float Rf,
+                                 float Vin_peak)
+{
+    BodePoint p;
+
+    Process_Impedance((float)freqHz);
+
+    float phaseRad = phaseDeg * ((float)M_PI / 180.0f);
+
+    /*
+       magSig = voltage magnitude from TIA output.
+       TIA relation: Vout = I * Rf
+       Therefore: I = Vout / Rf
+       Impedance: Z = Vin / I
+    */
+
+    float current_peak = magnitude / Rf;
+
+    if(current_peak > 0.000001f)
+    {
+        p.magnitude = Vin_peak / current_peak;
+    }
+    else
+    {
+        p.magnitude = 999999.0f;
+    }
+
+    p.phaseDeg = phaseDeg;
+
+    p.realPart = p.magnitude * cosf(phaseRad);
+
+    p.imagPart = p.magnitude * sinf(phaseRad);
 
     return p;
+}
+
+/* =========================================================
+   GET PHASE
+   ========================================================= */
+
+float Imp_GetPhase(void)
+{
+    return phaseDeg;
+}
+
+/* =========================================================
+   GET MAGNITUDE
+   ========================================================= */
+
+float Imp_GetMagnitude(void)
+{
+    return magnitude;
 }

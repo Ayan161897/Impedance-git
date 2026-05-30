@@ -21,5 +21,6 @@ void UART_Comm_Init(UART_CommHandleTypeDef *huart);
 void UART_SendString(const char *str);
 void UART_SendImpedanceData(uint32_t freq, float magnitude, float phase);
 void UART_ProcessCommand(void);
+void UART_RxCpltCallback(UART_CommHandleTypeDef *huart);
 
 #endif /* UART_COMM_H */

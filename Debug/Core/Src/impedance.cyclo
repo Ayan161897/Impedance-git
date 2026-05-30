@@ -1,2 +1,5 @@
-../Core/Src/impedance.c:14:6:Imp_Init	1
-../Core/Src/impedance.c:20:11:Imp_MeasureAtFrequency	5
+../Core/Src/impedance.c:37:6:Imp_Init	1
+../Core/Src/impedance.c:47:6:Process_Impedance	6
+../Core/Src/impedance.c:151:11:Imp_MeasureAtFrequency	2
+../Core/Src/impedance.c:192:7:Imp_GetPhase	1
+../Core/Src/impedance.c:201:7:Imp_GetMagnitude	1

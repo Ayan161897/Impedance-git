@@ -31,8 +31,6 @@ Core/Src/impedance.o: ../Core/Src/impedance.c ../Core/Inc/impedance.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h \
  ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h \
- ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_usart.h \
- ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_usart_ex.h \
  ../Core/Inc/main.h
 ../Core/Inc/impedance.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h:
@@ -67,6 +65,4 @@ Core/Src/impedance.o: ../Core/Src/impedance.c ../Core/Inc/impedance.h \
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_spi_ex.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h:
 ../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart_ex.h:
-../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_usart.h:
-../Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_usart_ex.h:
 ../Core/Inc/main.h:

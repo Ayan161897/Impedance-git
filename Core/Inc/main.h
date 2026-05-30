@@ -7,6 +7,7 @@
   */
 /* USER CODE END Header */
 
+/* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __MAIN_H
 #define __MAIN_H
 
@@ -15,118 +16,60 @@ extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-
 #include "stm32f3xx_hal.h"
 #include <stdint.h>
 #include <stdio.h>
 
-/* =========================================================
-   AD9833 CONNECTIONS
-   ========================================================= */
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
 
-#define AD9833_FSYNC_Pin           GPIO_PIN_4
-#define AD9833_FSYNC_GPIO_Port     GPIOA
+/* USER CODE END Includes */
 
-#define AD9833_SCK_Pin             GPIO_PIN_5
-#define AD9833_SCK_GPIO_Port       GPIOA
+/* Exported types ------------------------------------------------------------*/
+/* USER CODE BEGIN ET */
 
-#define AD9833_MISO_Pin            GPIO_PIN_6
-#define AD9833_MISO_GPIO_Port      GPIOA
+/* USER CODE END ET */
 
-#define AD9833_MOSI_Pin            GPIO_PIN_7
-#define AD9833_MOSI_GPIO_Port      GPIOA
+/* Exported constants --------------------------------------------------------*/
+/* USER CODE BEGIN EC */
 
-/* =========================================================
-   UART (CP2102)
-   ========================================================= */
+/* USER CODE END EC */
 
-#define UART_TX_Pin                GPIO_PIN_9
-#define UART_TX_GPIO_Port          GPIOA
+/* Exported macro ------------------------------------------------------------*/
+/* USER CODE BEGIN EM */
 
-#define UART_RX_Pin                GPIO_PIN_10
-#define UART_RX_GPIO_Port          GPIOA
+/* USER CODE END EM */
 
-/* =========================================================
-   ADC INPUTS
-   ========================================================= */
-
-/* Reference signal from AD9833 buffer */
-
-#define ADC_REF_Pin                GPIO_PIN_0
-#define ADC_REF_GPIO_Port          GPIOA
-
-/* TIA output signal */
-
-#define ADC_SIG_Pin                GPIO_PIN_1
-#define ADC_SIG_GPIO_Port          GPIOA
-
-/* =========================================================
-   SPI FLASH (W25Q32)
-   ========================================================= */
-
-#define W25Q32_CS_Pin              GPIO_PIN_12
-#define W25Q32_CS_GPIO_Port        GPIOB
-
-/* =========================================================
-   SWD DEBUG
-   ========================================================= */
-
-#define SWDIO_Pin                  GPIO_PIN_13
-#define SWDIO_GPIO_Port            GPIOA
-
-#define SWCLK_Pin                  GPIO_PIN_14
-#define SWCLK_GPIO_Port            GPIOA
-
-#define SWO_Pin                    GPIO_PIN_3
-#define SWO_GPIO_Port              GPIOB
-
-/* =========================================================
-   STATUS LED
-   ========================================================= */
-
-#define STATUS_LED_Pin             GPIO_PIN_13
-#define STATUS_LED_GPIO_Port       GPIOC
-
-/* =========================================================
-   FREQUENCY SWEEP SETTINGS
-   ========================================================= */
-
-/* Default sweep start frequency */
-
-#define SWEEP_START_FREQUENCY      1000.0f
-
-/* Default sweep stop frequency */
-
-#define SWEEP_STOP_FREQUENCY       100000.0f
-
-/* Default sweep step frequency */
-
-#define SWEEP_STEP_FREQUENCY       1000.0f
-
-/* Delay between frequency steps */
-
-#define SWEEP_DELAY_MS             100
-
-/* =========================================================
-   FUNCTION PROTOTYPES
-   ========================================================= */
-
+/* Exported functions prototypes ---------------------------------------------*/
 void Error_Handler(void);
 
-/* =========================================================
-   GLOBAL HANDLES
-   ========================================================= */
-
+/* USER CODE BEGIN EFP */
 extern UART_HandleTypeDef huart1;
-
 extern SPI_HandleTypeDef hspi1;
-
 extern ADC_HandleTypeDef hadc1;
-
 extern DMA_HandleTypeDef hdma_adc1;
 
 void Process_Start_Command(void);
 void Process_Stop_Command(void);
+/* USER CODE END EFP */
+
+/* Private defines -----------------------------------------------------------*/
+#define AD9833_FSYNC_Pin GPIO_PIN_4
+#define AD9833_FSYNC_GPIO_Port GPIOA
+#define W25Q32_CS_Pin GPIO_PIN_12
+#define W25Q32_CS_GPIO_Port GPIOB
+#define STATUS_LED_Pin GPIO_PIN_13
+#define STATUS_LED_GPIO_Port GPIOB
+
+/* USER CODE BEGIN Private defines */
+/* Frequency Sweep Settings */
+
+#define SWEEP_START_FREQUENCY     1000U
+#define SWEEP_STOP_FREQUENCY      100000U
+#define SWEEP_STEP_FREQUENCY      1000U
+
+#define SWEEP_DELAY_MS            100
+/* USER CODE END Private defines */
 
 #ifdef __cplusplus
 }

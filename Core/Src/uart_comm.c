@@ -10,6 +10,7 @@
 #include "main.h"
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 __weak void Process_Start_Command(void)
 {
@@ -19,6 +20,30 @@ __weak void Process_Stop_Command(void)
 {
 }
 
+__weak void Process_Status_Command(void)
+{
+}
+
+__weak void Process_SetStartFrequency(uint32_t value)
+{
+    (void)value;
+}
+
+__weak void Process_SetStopFrequency(uint32_t value)
+{
+    (void)value;
+}
+
+__weak void Process_SetStepFrequency(uint32_t value)
+{
+    (void)value;
+}
+
+__weak void Process_SetFeedbackResistor(float value)
+{
+    (void)value;
+}
+
 static UART_CommHandleTypeDef *uart_handle = NULL;
 
 static uint8_t rx_char;
@@ -26,7 +51,7 @@ static char rx_buffer[128];
 #ifdef HAL_UART_MODULE_ENABLED
 static uint8_t rx_index = 0;
 #endif
-static uint8_t command_ready = 0;
+static volatile uint8_t command_ready = 0;
 
 /* ===================================================================
    Initialization
@@ -56,16 +81,38 @@ void UART_SendString(const char *str)
 }
 
 /* ===================================================================
-   Send Impedance Data (Optimized for float printing)
+   Send Impedance Data
    =================================================================== */
 void UART_SendImpedanceData(uint32_t freq, float magnitude, float phase)
 {
     char buffer[128];
+    uint32_t magnitude_x100;
+    int32_t phase_x100;
+    uint32_t phase_abs_x100;
 
-    // snprintf with %f is now supported after adding -u _printf_float
+    magnitude_x100 = (uint32_t)((magnitude * 100.0f) + 0.5f);
+
+    if(phase >= 0.0f)
+    {
+        phase_x100 = (int32_t)((phase * 100.0f) + 0.5f);
+    }
+    else
+    {
+        phase_x100 = (int32_t)((phase * 100.0f) - 0.5f);
+    }
+
+    phase_abs_x100 = (phase_x100 < 0) ?
+                     (uint32_t)(-phase_x100) :
+                     (uint32_t)phase_x100;
+
     int len = snprintf(buffer, sizeof(buffer),
-                      "Freq=%lu, |Z|=%f, Phase=%f\r\n",
-                      freq, magnitude, phase);
+                      "DATA,%lu,%lu.%02lu,%s%lu.%02lu\r\n",
+                      freq,
+                      magnitude_x100 / 100U,
+                      magnitude_x100 % 100U,
+                      (phase_x100 < 0) ? "-" : "",
+                      phase_abs_x100 / 100U,
+                      phase_abs_x100 % 100U);
 
     if (len > 0 && len < (int)sizeof(buffer))
     {
@@ -99,6 +146,11 @@ void UART_RxCpltCallback(UART_HandleTypeDef *huart)
         HAL_UART_Receive_IT(uart_handle, &rx_char, 1);
     }
 }
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+    UART_RxCpltCallback(huart);
+}
 #endif
 
 /* ===================================================================
@@ -109,21 +161,36 @@ void UART_ProcessCommand(void)
     if (!command_ready) return;
     command_ready = 0;
 
-    // Debug: echo received command
-    // printf("Received: %s\r\n", rx_buffer);
-
-    if (strncmp(rx_buffer, "START", 5) == 0)
+    if (strcmp(rx_buffer, "START") == 0)
     {
-        UART_SendString("OK START\r\n");
         Process_Start_Command();
     }
     else if (strcmp(rx_buffer, "STOP") == 0)
     {
-        UART_SendString("OK STOP\r\n");
         Process_Stop_Command();
+    }
+    else if (strcmp(rx_buffer, "STATUS") == 0)
+    {
+        Process_Status_Command();
+    }
+    else if (strncmp(rx_buffer, "SET_START_FREQ,", 15) == 0)
+    {
+        Process_SetStartFrequency((uint32_t)strtoul(&rx_buffer[15], NULL, 10));
+    }
+    else if (strncmp(rx_buffer, "SET_STOP_FREQ,", 14) == 0)
+    {
+        Process_SetStopFrequency((uint32_t)strtoul(&rx_buffer[14], NULL, 10));
+    }
+    else if (strncmp(rx_buffer, "SET_STEP_FREQ,", 14) == 0)
+    {
+        Process_SetStepFrequency((uint32_t)strtoul(&rx_buffer[14], NULL, 10));
+    }
+    else if (strncmp(rx_buffer, "SET_RF,", 7) == 0)
+    {
+        Process_SetFeedbackResistor(strtof(&rx_buffer[7], NULL));
     }
     else
     {
-        UART_SendString("UNKNOWN COMMAND\r\n");
+        UART_SendString("ERROR,UNKNOWN_COMMAND\r\n");
     }
 }
