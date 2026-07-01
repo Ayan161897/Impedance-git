@@ -10,6 +10,21 @@
 
 #define SAMPLE_COUNT 256
 
+/*
+ * ADC1 runs from a 72 MHz async clock. Each channel uses 61.5 sample
+ * cycles plus 12.5 conversion cycles, and the scan sequence has two
+ * channels. This is the effective sample rate for each interleaved
+ * reference/signal pair in adc_buffer.
+ */
+#define IMP_ADC_CLOCK_HZ              72000000.0f
+#define IMP_ADC_SAMPLE_CYCLES         61.5f
+#define IMP_ADC_CONVERSION_CYCLES     12.5f
+#define IMP_ADC_CHANNEL_COUNT         2.0f
+#define IMP_SAMPLE_RATE_HZ            (IMP_ADC_CLOCK_HZ / \
+                                      ((IMP_ADC_SAMPLE_CYCLES + \
+                                        IMP_ADC_CONVERSION_CYCLES) * \
+                                       IMP_ADC_CHANNEL_COUNT))
+
 /* =========================================================
    IMPEDANCE RESULT STRUCTURE
    ========================================================= */
@@ -51,8 +66,7 @@ void Process_Impedance(float frequency);
 /* Measure impedance at one frequency */
 
 BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
-                                 float Rf,
-                                 float Vin_peak);
+                                 float Rf);
 
 /* Get calculated phase */
 

@@ -1,5 +1,6 @@
-../Core/Src/impedance.c:37:6:Imp_Init	8	static
-../Core/Src/impedance.c:47:6:Process_Impedance	80	static
-../Core/Src/impedance.c:151:11:Imp_MeasureAtFrequency	96	static
-../Core/Src/impedance.c:192:7:Imp_GetPhase	4	static
-../Core/Src/impedance.c:201:7:Imp_GetMagnitude	4	static
+../Core/Src/impedance.c:41:21:Estimate_Tone	88	static
+../Core/Src/impedance.c:103:6:Imp_Init	8	static
+../Core/Src/impedance.c:113:6:Process_Impedance	56	static
+../Core/Src/impedance.c:182:11:Imp_MeasureAtFrequency	88	static
+../Core/Src/impedance.c:224:7:Imp_GetPhase	4	static
+../Core/Src/impedance.c:233:7:Imp_GetMagnitude	4	static

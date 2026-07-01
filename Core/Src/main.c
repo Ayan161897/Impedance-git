@@ -14,6 +14,7 @@
 #include "ad9833.h"
 #include "impedance.h"
 #include "w25q32.h"
+#include "flash_log.h"
 #include <stdio.h>
 #include "uart_comm.h"
 /* USER CODE END Includes */
@@ -80,13 +81,39 @@ static void Send_Status(void)
 {
     uint32_t rf_x100 = (uint32_t)((feedback_resistor * 100.0f) + 0.5f);
 
-    printf("STATUS,%s,START=%lu,STOP=%lu,STEP=%lu,RF=%lu.%02lu\r\n",
+    printf("STATUS,%s,START=%lu,STOP=%lu,STEP=%lu,RF=%lu.%02lu,FLASH_COUNT=%lu\r\n",
            measurement_running ? "RUNNING" : "IDLE",
            sweep_start_frequency,
            sweep_stop_frequency,
            sweep_step_frequency,
            rf_x100 / 100U,
-           rf_x100 % 100U);
+           rf_x100 % 100U,
+           FlashLog_GetRecordCount());
+}
+
+static int32_t Scale_Float_X100(float value)
+{
+    if(value >= 0.0f)
+    {
+        return (int32_t)((value * 100.0f) + 0.5f);
+    }
+
+    return (int32_t)((value * 100.0f) - 0.5f);
+}
+
+static void Send_Flash_Record(const FlashLogRecord *record)
+{
+    uint32_t magnitude_x100 = (uint32_t)((record->magnitude * 100.0f) + 0.5f);
+    int32_t phase_x100 = Scale_Float_X100(record->phase_deg);
+    int32_t real_x100 = Scale_Float_X100(record->real);
+    int32_t imag_x100 = Scale_Float_X100(record->imag);
+
+    printf("FLASH_DATA,%lu,%lu,%ld,%ld,%ld\r\n",
+           (unsigned long)record->freq_hz,
+           (unsigned long)magnitude_x100,
+           (long)phase_x100,
+           (long)real_x100,
+           (long)imag_x100);
 }
 
 static uint8_t Sweep_Config_IsValid(void)
@@ -133,6 +160,12 @@ void Process_Start_Command(void)
         return;
     }
 
+    if(FlashLog_BeginSweep() != FLASH_LOG_OK)
+    {
+        UART_SendString("ERROR,FLASH_ERASE\r\n");
+        return;
+    }
+
     measurement_running = 1;
     UART_SendString("OK START\r\n");
 }
@@ -146,6 +179,64 @@ void Process_Stop_Command(void)
 void Process_Status_Command(void)
 {
     Send_Status();
+}
+
+void Process_FlashStatus_Command(void)
+{
+    printf("FLASH_STATUS,COUNT=%lu,CAPACITY=%lu\r\n",
+           (unsigned long)FlashLog_GetRecordCount(),
+           (unsigned long)FlashLog_GetCapacity());
+}
+
+void Process_EraseFlash_Command(void)
+{
+    if(measurement_running)
+    {
+        UART_SendString("ERROR,BUSY\r\n");
+        return;
+    }
+
+    if(FlashLog_Erase() == FLASH_LOG_OK)
+    {
+        UART_SendString("OK ERASE_FLASH\r\n");
+    }
+    else
+    {
+        UART_SendString("ERROR,FLASH_ERASE\r\n");
+    }
+}
+
+void Process_DumpFlash_Command(void)
+{
+    uint32_t count = FlashLog_GetRecordCount();
+
+    if(measurement_running)
+    {
+        UART_SendString("ERROR,BUSY\r\n");
+        return;
+    }
+
+    printf("FLASH_DUMP,BEGIN,COUNT=%lu\r\n",
+           (unsigned long)count);
+    UART_SendString("FLASH_DUMP,FORMAT,FREQ_HZ,MAG_X100,PHASE_X100,REAL_X100,IMAG_X100\r\n");
+
+    for(uint32_t i = 0; i < count; i++)
+    {
+        FlashLogRecord record;
+
+        if(FlashLog_ReadRecord(i, &record) == FLASH_LOG_OK)
+        {
+            Send_Flash_Record(&record);
+        }
+        else
+        {
+            printf("FLASH_DUMP,ERROR,INDEX=%lu\r\n",
+                   (unsigned long)i);
+            break;
+        }
+    }
+
+    UART_SendString("FLASH_DUMP,END\r\n");
 }
 
 void Process_SetStartFrequency(uint32_t value)
@@ -268,6 +359,8 @@ int main(void)
   printf("FLASH,ID,0x%08lX\r\n",
          flash_id);
 
+  FlashLog_Init();
+
   /* =========================================
      AD9833 INIT
      ========================================= */
@@ -317,12 +410,23 @@ int main(void)
 
               result = Imp_MeasureAtFrequency(
                           freq,
-                          feedback_resistor,
-                          1.0f);
+                          feedback_resistor);
 
               UART_SendImpedanceData(freq,
                                      result.magnitude,
                                      result.phaseDeg);
+
+              FlashLogStatus flash_status =
+                      FlashLog_WritePoint(freq, &result);
+
+              if(flash_status == FLASH_LOG_FULL)
+              {
+                  UART_SendString("ERROR,FLASH_FULL\r\n");
+              }
+              else if(flash_status != FLASH_LOG_OK)
+              {
+                  UART_SendString("ERROR,FLASH_WRITE\r\n");
+              }
 
               HAL_GPIO_TogglePin(
                       STATUS_LED_GPIO_Port,

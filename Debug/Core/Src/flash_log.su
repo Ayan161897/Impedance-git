@@ -1,0 +1,11 @@
+../Core/Src/flash_log.c:28:17:FlashLog_RecordAddress	16	static
+../Core/Src/flash_log.c:33:13:FlashLog_WriteBytes	40	static
+../Core/Src/flash_log.c:49:16:FlashLog_HeaderIsValid	24	static
+../Core/Src/flash_log.c:57:17:FlashLog_ScanRecordCount	48	static
+../Core/Src/flash_log.c:80:6:FlashLog_Init	24	static
+../Core/Src/flash_log.c:100:16:FlashLog_Erase	32	static
+../Core/Src/flash_log.c:124:16:FlashLog_BeginSweep	8	static
+../Core/Src/flash_log.c:129:16:FlashLog_WritePoint	48	static
+../Core/Src/flash_log.c:166:16:FlashLog_ReadRecord	16	static
+../Core/Src/flash_log.c:185:10:FlashLog_GetRecordCount	4	static
+../Core/Src/flash_log.c:190:10:FlashLog_GetCapacity	4	static

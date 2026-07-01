@@ -24,6 +24,18 @@ __weak void Process_Status_Command(void)
 {
 }
 
+__weak void Process_FlashStatus_Command(void)
+{
+}
+
+__weak void Process_EraseFlash_Command(void)
+{
+}
+
+__weak void Process_DumpFlash_Command(void)
+{
+}
+
 __weak void Process_SetStartFrequency(uint32_t value)
 {
     (void)value;
@@ -172,6 +184,18 @@ void UART_ProcessCommand(void)
     else if (strcmp(rx_buffer, "STATUS") == 0)
     {
         Process_Status_Command();
+    }
+    else if (strcmp(rx_buffer, "FLASH_STATUS") == 0)
+    {
+        Process_FlashStatus_Command();
+    }
+    else if (strcmp(rx_buffer, "ERASE_FLASH") == 0)
+    {
+        Process_EraseFlash_Command();
+    }
+    else if (strcmp(rx_buffer, "DUMP_FLASH") == 0)
+    {
+        Process_DumpFlash_Command();
     }
     else if (strncmp(rx_buffer, "SET_START_FREQ,", 15) == 0)
     {

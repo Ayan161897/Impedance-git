@@ -51,6 +51,14 @@ extern DMA_HandleTypeDef hdma_adc1;
 
 void Process_Start_Command(void);
 void Process_Stop_Command(void);
+void Process_Status_Command(void);
+void Process_FlashStatus_Command(void);
+void Process_EraseFlash_Command(void);
+void Process_DumpFlash_Command(void);
+void Process_SetStartFrequency(uint32_t value);
+void Process_SetStopFrequency(uint32_t value);
+void Process_SetStepFrequency(uint32_t value);
+void Process_SetFeedbackResistor(float value);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

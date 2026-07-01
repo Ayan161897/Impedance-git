@@ -24,11 +24,77 @@ float sig_samples[SAMPLE_COUNT];
 
 static float magnitude = 0.0f;
 
+static float referenceMagnitude = 0.0f;
+
 static float phaseDeg = 0.0f;
 
 static float realPart = 0.0f;
 
 static float imagPart = 0.0f;
+
+typedef struct
+{
+    float magnitude;
+    float phaseRad;
+} ToneEstimate;
+
+static ToneEstimate Estimate_Tone(const float *samples, float frequency)
+{
+    ToneEstimate estimate;
+    float sumCosCos = 0.0f;
+    float sumSinSin = 0.0f;
+    float sumCosSin = 0.0f;
+    float sumSampleCos = 0.0f;
+    float sumSampleSin = 0.0f;
+
+    for(uint32_t i = 0; i < SAMPLE_COUNT; i++)
+    {
+        float angle =
+            2.0f *
+            (float)M_PI *
+            frequency *
+            ((float)i / IMP_SAMPLE_RATE_HZ);
+
+        float cosVal = cosf(angle);
+        float sinVal = sinf(angle);
+
+        sumCosCos += cosVal * cosVal;
+        sumSinSin += sinVal * sinVal;
+        sumCosSin += cosVal * sinVal;
+        sumSampleCos += samples[i] * cosVal;
+        sumSampleSin += samples[i] * sinVal;
+    }
+
+    float determinant =
+        (sumCosCos * sumSinSin) -
+        (sumCosSin * sumCosSin);
+
+    if(fabsf(determinant) < 0.000001f)
+    {
+        estimate.magnitude = 0.0f;
+        estimate.phaseRad = 0.0f;
+        return estimate;
+    }
+
+    float cosCoeff =
+        ((sumSampleCos * sumSinSin) -
+         (sumSampleSin * sumCosSin)) /
+        determinant;
+
+    float sinCoeff =
+        ((sumSampleSin * sumCosCos) -
+         (sumSampleCos * sumCosSin)) /
+        determinant;
+
+    estimate.magnitude =
+        sqrtf((cosCoeff * cosCoeff) +
+              (sinCoeff * sinCoeff));
+
+    estimate.phaseRad =
+        atan2f(sinCoeff, cosCoeff);
+
+    return estimate;
+}
 
 /* =========================================================
    INITIALIZATION
@@ -47,13 +113,6 @@ void Imp_Init(void)
 void Process_Impedance(float frequency)
 {
     uint32_t i;
-
-    (void)frequency;
-
-    float sumReRef = 0.0f;
-    float sumImRef = 0.0f;
-    float sumReSig = 0.0f;
-    float sumImSig = 0.0f;
 
     float refMean = 0.0f;
     float sigMean = 0.0f;
@@ -90,42 +149,14 @@ void Process_Impedance(float frequency)
         sig_samples[i] -= sigMean;
     }
 
-    for(i = 0; i < SAMPLE_COUNT; i++)
-    {
-        float angle =
-            2.0f *
-            (float)M_PI *
-            ((float)i / SAMPLE_COUNT);
+    ToneEstimate refTone = Estimate_Tone(ref_samples, frequency);
+    ToneEstimate sigTone = Estimate_Tone(sig_samples, frequency);
 
-        float cosVal = cosf(angle);
-        float sinVal = sinf(angle);
-
-        sumReRef += ref_samples[i] * cosVal;
-        sumImRef += ref_samples[i] * sinVal;
-
-        sumReSig += sig_samples[i] * cosVal;
-        sumImSig += sig_samples[i] * sinVal;
-    }
-
-    float magRef =
-        (2.0f / SAMPLE_COUNT) *
-        sqrtf((sumReRef * sumReRef) +
-              (sumImRef * sumImRef));
-
-    float magSig =
-        (2.0f / SAMPLE_COUNT) *
-        sqrtf((sumReSig * sumReSig) +
-              (sumImSig * sumImSig));
-
-    (void)magRef;
-
-    magnitude = magSig;
-
-    float phaseRef = atan2f(sumImRef, sumReRef);
-    float phaseSig = atan2f(sumImSig, sumReSig);
+    referenceMagnitude = refTone.magnitude;
+    magnitude = sigTone.magnitude;
 
     phaseDeg =
-        (phaseSig - phaseRef) *
+        (sigTone.phaseRad - refTone.phaseRad) *
         (180.0f / (float)M_PI);
 
     while(phaseDeg > 180.0f)
@@ -149,8 +180,7 @@ void Process_Impedance(float frequency)
    ========================================================= */
 
 BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
-                                 float Rf,
-                                 float Vin_peak)
+                                 float Rf)
 {
     BodePoint p;
 
@@ -159,7 +189,8 @@ BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
     float phaseRad = phaseDeg * ((float)M_PI / 180.0f);
 
     /*
-       magSig = voltage magnitude from TIA output.
+       magnitude = voltage magnitude from TIA output.
+       referenceMagnitude = measured excitation/reference voltage.
        TIA relation: Vout = I * Rf
        Therefore: I = Vout / Rf
        Impedance: Z = Vin / I
@@ -167,9 +198,10 @@ BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
 
     float current_peak = magnitude / Rf;
 
-    if(current_peak > 0.000001f)
+    if((current_peak > 0.000001f) &&
+       (referenceMagnitude > 0.000001f))
     {
-        p.magnitude = Vin_peak / current_peak;
+        p.magnitude = referenceMagnitude / current_peak;
     }
     else
     {
