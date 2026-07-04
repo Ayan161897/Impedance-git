@@ -15,14 +15,19 @@ The simulator needs a null-modem-style virtual COM port pair so the real
 GUI can connect to "hardware" that's actually this Python process on the
 other end.
 
-1. Install [com0com](https://sourceforge.net/projects/com0com/) (free,
-   widely used on Windows for exactly this).
-2. Create a linked pair, e.g. COM10 <-> COM11, either via the com0com
-   Setup Command Prompt:
-   ```
-   command> install PortName=COM10 PortName=COM11
-   ```
-   or via its GUI (`com0com Setup Command Prompt` / `setupg.exe`).
+1. Install a null-modem virtual COM port driver. Options:
+   - [com0com](https://sourceforge.net/projects/com0com/) — free, but not
+     in winget; its driver is unsigned on stock installs, so Windows may
+     require enabling test-signing mode (`bcdedit /set testsigning on`,
+     needs a reboot) or using a WHQL-signed fork before it'll load.
+   - `winget install HHDSoftware.VirtualSerialPortTools` or
+     `winget install ElectronicTeam.VirtualSerialPortDriver` — properly
+     signed, installable without touching driver-signing settings, but
+     check whether their free/trial tier covers an unrestricted virtual
+     pair before relying on it.
+2. Create a linked pair, e.g. COM10 <-> COM11 (com0com: via its Setup
+   Command Prompt, `command> install PortName=COM10 PortName=COM11`; the
+   other tools have their own pairing UI).
 3. Point the simulator at one port (e.g. COM11) and the real GUI at the
    other (COM10).
 
@@ -74,3 +79,16 @@ ported firmware algorithm is working correctly.
   sine/cosine basis, not the AD9833's true output frequency after 28-bit
   tuning-word rounding. The simulator reproduces this too, so you'll see
   the same small frequency-dependent measurement error real hardware has.
+- **Worth a closer look on the firmware/hardware side:** the fixed
+  256-sample acquisition window at the ADC's ~486 kHz effective sample
+  rate (`impedance.c` `SAMPLE_COUNT`/`IMP_SAMPLE_RATE_HZ`) captures only
+  ~0.53 cycles of the excitation tone at the sweep's default *start*
+  frequency of 1 kHz (`SWEEP_START_FREQUENCY` in `main.h`). The self-test
+  (`sim/selftest.py`) shows the sine/cosine fit's error exploding to
+  >100% at 1 kHz and only settling down above roughly 5 kHz (~2.6 cycles).
+  This showed up while porting the algorithm to Python, not from any
+  change made here — worth checking on real hardware whether low-end
+  sweep points are actually usable, or whether `SAMPLE_COUNT` / the ADC
+  timing needs revisiting for accuracy near 1 kHz. Flagging this per our
+  usual practice of surfacing cross-domain issues rather than changing
+  firmware code without asking first.
