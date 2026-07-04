@@ -38,7 +38,7 @@ typedef struct
     float phaseRad;
 } ToneEstimate;
 
-static ToneEstimate Estimate_Tone(const float *samples, float frequency)
+static ToneEstimate Estimate_Tone(const float *samples, float frequency, float t_offset_s)
 {
     ToneEstimate estimate;
     float sumCosCos = 0.0f;
@@ -49,11 +49,15 @@ static ToneEstimate Estimate_Tone(const float *samples, float frequency)
 
     for(uint32_t i = 0; i < SAMPLE_COUNT; i++)
     {
+        /* t_offset_s corrects for sequential ADC scan timing:
+           CH1 (ref) is sampled first, CH2 (sig) is sampled one
+           conversion period later (T_conv = 74/72MHz ≈ 1.028 µs).
+           Pass 0.0f for the reference channel and T_conv for signal. */
         float angle =
             2.0f *
             (float)M_PI *
             frequency *
-            ((float)i / IMP_SAMPLE_RATE_HZ);
+            (((float)i / IMP_SAMPLE_RATE_HZ) + t_offset_s);
 
         float cosVal = cosf(angle);
         float sinVal = sinf(angle);
@@ -149,8 +153,13 @@ void Process_Impedance(float frequency)
         sig_samples[i] -= sigMean;
     }
 
-    ToneEstimate refTone = Estimate_Tone(ref_samples, frequency);
-    ToneEstimate sigTone = Estimate_Tone(sig_samples, frequency);
+    /* One ADC conversion period — the delay between CH1 and CH2 in scan mode.
+       T_conv = (sample_cycles + conversion_cycles) / ADC_clock
+              = (61.5 + 12.5) / 72,000,000 = 1/(2 * IMP_SAMPLE_RATE_HZ)       */
+    const float T_conv = 1.0f / (2.0f * IMP_SAMPLE_RATE_HZ);
+
+    ToneEstimate refTone = Estimate_Tone(ref_samples, frequency, 0.0f);
+    ToneEstimate sigTone = Estimate_Tone(sig_samples, frequency, T_conv);
 
     referenceMagnitude = refTone.magnitude;
     magnitude = sigTone.magnitude;
