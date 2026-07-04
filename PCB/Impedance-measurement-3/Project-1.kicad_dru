@@ -1,0 +1,11 @@
+(version 1)
+
+# Local clearance exception for fine-pitch parts (0.5mm pin pitch), where the
+# bare pads themselves are physically closer together than the board's general
+# 0.3mm clearance target allows. Global board clearance stays at 0.3mm to meet
+# the milling-machine requirement everywhere else; this rule only relaxes it
+# right at these four footprints where the component pitch forces it.
+(rule "fine_pitch_clearance_exception"
+	(condition "A.insideCourtyard('U1') || B.insideCourtyard('U1') || A.insideCourtyard('Signal-generator1') || B.insideCourtyard('Signal-generator1') || A.insideCourtyard('USB-UART(CP2102)1') || B.insideCourtyard('USB-UART(CP2102)1') || A.insideCourtyard('USB-C-power-supply1') || B.insideCourtyard('USB-C-power-supply1')")
+	(constraint clearance (min 0.15mm))
+)
