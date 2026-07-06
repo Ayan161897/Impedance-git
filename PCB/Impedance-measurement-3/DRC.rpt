@@ -1,7 +1,40 @@
 ** Drc report for Project-1.kicad_pcb **
-** Created on 2026-07-04T17:30:47+0200 **
+** Created on 2026-07-06T02:07:55+0200 **
 
-** Found 0 DRC violations **
+** Found 11 DRC violations **
+[lib_footprint_mismatch]: Footprint 'MountingHole_3.2mm_M3_Pad' does not match copy in library 'MountingHole'.
+    Local override; warning
+    @(67.0000 mm, 36.0000 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'MountingHole_3.2mm_M3_Pad' does not match copy in library 'MountingHole'.
+    Local override; warning
+    @(67.0000 mm, 138.0000 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'MountingHole_3.2mm_M3_Pad' does not match copy in library 'MountingHole'.
+    Local override; warning
+    @(226.0000 mm, 138.0000 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'MountingHole_3.2mm_M3_Pad' does not match copy in library 'MountingHole'.
+    Local override; warning
+    @(226.0000 mm, 36.0000 mm): Footprint REF**
+[lib_footprint_mismatch]: Footprint 'HRO_TYPE-C-31-M-12' does not match copy in library 'Symbol'.
+    Local override; warning
+    @(66.1375 mm, 46.0000 mm): Footprint USB-C-power-supply1
+[lib_footprint_mismatch]: Footprint '2X10_BOXHEADER' does not match copy in library 'Symbol'.
+    Local override; warning
+    @(161.7300 mm, 90.3650 mm): Footprint SWD-connector1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(110.0750 mm, 56.4540 mm): Segment on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(112.4440 mm, 56.4540 mm): Segment on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(114.9840 mm, 56.4540 mm): Segment on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(112.7295 mm, 56.2000 mm): Arc on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(112.7305 mm, 56.2000 mm): Arc on F.Silkscreen
 
 ** Found 0 unconnected pads **
 

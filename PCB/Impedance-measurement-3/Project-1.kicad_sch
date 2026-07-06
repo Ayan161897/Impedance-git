@@ -4,6 +4,11 @@
 	(generator_version "8.0")
 	(uuid "ded411bd-4c6d-4bca-8aa2-0255249bdd26")
 	(paper "A4")
+	(title_block
+		(title "Electrochemical Impedance Spectroscopy")
+		(date "2026-07-06")
+		(rev "1")
+	)
 	(lib_symbols
 		(symbol "25MHz-crystal-oscillator2:ASE-25.000MHZ-LC-T"
 			(pin_names
@@ -6060,6 +6065,12 @@
 		(uuid "b342225d-a874-4fce-a68f-d7e367503a92")
 	)
 	(junction
+		(at 191.77 20.32)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b3bcbfcb-78e1-49a9-bca7-b11d281b46f6")
+	)
+	(junction
 		(at 55.88 45.72)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6369,6 +6380,26 @@
 	)
 	(wire
 		(pts
+			(xy 226.06 20.32) (xy 191.77 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "05cd00c6-0c88-42f5-bb98-9d164eb110e8")
+	)
+	(wire
+		(pts
+			(xy 191.77 20.32) (xy 191.77 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "062fb826-46ff-4926-be66-a827a2d9e772")
+	)
+	(wire
+		(pts
 			(xy 209.55 35.56) (xy 214.63 35.56)
 		)
 		(stroke
@@ -6396,6 +6427,16 @@
 			(type default)
 		)
 		(uuid "093aa730-164e-4309-bcff-dcce1c2c608f")
+	)
+	(wire
+		(pts
+			(xy 191.77 17.78) (xy 191.77 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0956090e-840c-4194-8139-0612b0a720ab")
 	)
 	(wire
 		(pts
@@ -7349,16 +7390,6 @@
 	)
 	(wire
 		(pts
-			(xy 187.96 50.8) (xy 191.77 50.8)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "35ce9192-1846-48cd-88e8-41d18f8161b8")
-	)
-	(wire
-		(pts
 			(xy 57.15 60.96) (xy 57.15 58.42)
 		)
 		(stroke
@@ -7466,6 +7497,16 @@
 			(type default)
 		)
 		(uuid "39d0cc42-eea7-4429-895d-a1c0513d38a0")
+	)
+	(wire
+		(pts
+			(xy 226.06 25.4) (xy 226.06 20.32)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3a1a1da6-ad66-443b-8060-f1c1a008a933")
 	)
 	(wire
 		(pts
@@ -9079,16 +9120,6 @@
 	)
 	(wire
 		(pts
-			(xy 191.77 50.8) (xy 191.77 17.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "8bbcb709-0779-4008-a9bd-a39eb61312d5")
-	)
-	(wire
-		(pts
 			(xy 213.36 119.38) (xy 213.36 121.92)
 		)
 		(stroke
@@ -9909,6 +9940,16 @@
 	)
 	(wire
 		(pts
+			(xy 191.77 53.34) (xy 187.96 53.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b7e42ade-f9dc-4d1f-9b65-9807c28fabf8")
+	)
+	(wire
+		(pts
 			(xy 115.57 48.26) (xy 115.57 93.98)
 		)
 		(stroke
@@ -10166,6 +10207,16 @@
 			(type default)
 		)
 		(uuid "c77058cd-493e-49e9-a619-1509d12d531a")
+	)
+	(wire
+		(pts
+			(xy 232.41 25.4) (xy 226.06 25.4)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c78e3501-12f5-4367-aae6-2afe9697766b")
 	)
 	(wire
 		(pts
@@ -11637,6 +11688,86 @@
 			(justify left bottom)
 		)
 		(uuid "eb8a5098-077f-40df-99aa-9a1f88b8bbfb")
+	)
+	(label "GND"
+		(at 240.03 25.4 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fb3e8323-cb9c-48c3-9263-d529ba8756e7")
+	)
+	(symbol
+		(lib_id "Device:R")
+		(at 236.22 25.4 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "052c4be2-8b82-40a2-aeba-7602c7246855")
+		(property "Reference" "R25_PULL_10K1"
+			(at 236.22 19.05 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "10k"
+			(at 236.22 21.59 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_THT:R_Axial_DIN0204_L3.6mm_D1.6mm_P5.08mm_Horizontal"
+			(at 236.22 27.178 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 236.22 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor"
+			(at 236.22 25.4 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a018782e-9f52-4c5f-9d1c-8aff29e7213d")
+		)
+		(pin "2"
+			(uuid "9a8678cb-f37c-452b-b1ea-0ca6fa6dc0c8")
+		)
+		(instances
+			(project "Project-1"
+				(path "/ded411bd-4c6d-4bca-8aa2-0255249bdd26"
+					(reference "R25_PULL_10K1")
+					(unit 1)
+				)
+			)
+		)
 	)
 	(symbol
 		(lib_id "Connector:TestPoint_Small")
