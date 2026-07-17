@@ -1,4 +1,4 @@
-24302506960124236
+24306074219208845
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -90629,6 +90629,13 @@ AVX-E
 2
 2
 Symbol
+BellWether_80211-1921_TypeC_24P
+USB Type-C receptacle, BellWether 80211-1921, fully SMD (confirmed via Reichelt spec: Anschluss=SMD), 0.50mm pitch, 24 signal circuits + 4 SMD mechanical/shield pads (rectangular, 0.50mm wide per drawing), CH=1.48mm, horizontal mid-mount. Built from manufacturer drawing SD-80211-019 (24 signal pin count, pitch, pin-to-net map, overall 8.90x5.59mm envelope, and mechanical-pad sizes are taken directly from the drawing and are high-confidence). SMD pad toe-length (Y size) and the exact X/Y placement of the 4 mechanical pads are best-effort estimates -- could not be reliably extracted from the scanned/OCR'd PDF (no vector-level PDF access available, and no alternate CAD source was found via web search). KNOWN GAP: drawing also shows 2x NPTH Ø0.55mm alignment/polarization holes (see sheet 1 bottom view) that are NOT included here since their exact position could not be confirmed -- a guessed position for a mechanical locating peg clearance hole was judged riskier than omitting it. VERIFY AGAINST THE VENDOR DRAWING OR A PHYSICAL PART BEFORE FABRICATION.
+USB USB-C Type-C connector BellWether 80211-1921 UNVERIFIED-GEOMETRY
+0
+28
+28
+Symbol
 C315C100K5G5HA
 C315C100K5G5HA-1
 Capacitor
@@ -91643,6 +91650,13 @@ SOP50P490X110-10N
 0
 10
 10
+Symbol
+SOT95P237X112-3N
+P3.064A-2
+Integrated Circuit
+0
+3
+3
 Symbol
 Smolhaj_Scale_0.1
 BLÅHAJ , smol 50cm nominal, 1:10 scale (56mm Snoot-Flosse), MPN 205.406.63 (https://www.ikea.com/gb/en/p/blahaj-soft-toy-baby-shark-20540663/)
