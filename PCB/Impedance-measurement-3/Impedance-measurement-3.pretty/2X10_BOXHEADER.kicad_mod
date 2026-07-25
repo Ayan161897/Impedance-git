@@ -1,0 +1,334 @@
+(footprint "2X10_BOXHEADER"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "2x10 0.05in shrouded male header")
+	(property "Reference" "REF**"
+		(at 9.080665 0.265167 0)
+		(layer "F.SilkS")
+		(uuid "1d667130-5d20-4415-8d60-20965117165a")
+		(effects
+			(font
+				(size 1.000622 1.000622)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "2X10_BOXHEADER"
+		(at 14.79188 -1.33517 0)
+		(layer "F.Fab")
+		(uuid "5b5159f2-37ce-4bf9-b05c-d873f0e1504e")
+		(effects
+			(font
+				(size 1.000126 1.000126)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" "Symbol:2X10_BOXHEADER"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "83f5fab8-ca9d-4a3a-aed4-cc30dac9ea3d")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "266f22e1-e871-4766-aef7-ee78b1bba674")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "f3c0c6f0-5b60-47f0-a660-8939711afbcd")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "MF" "3M"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "ab6fab45-cef9-4cc6-baa3-7ab6961b4eee")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description_1" "\n                        \n                            Dispenser, Wire Marker, Adhesive, Vinyl Film, 4.76 L, 1.24 W, 2.95 H | 3M SWD\n                        \n"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "39dd29a3-d3e9-4b9a-b802-e8b861767439")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Package" "None"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "a235fd1f-cd14-47e4-842d-d2492fe1cb81")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Price" "None"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "90cdd144-4f51-4dec-ac5e-9457dcd03f27")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "SnapEDA_Link" "https://www.snapeda.com/parts/SWD/3M/view-part/?ref=snap"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "35ad9e27-51dc-4c70-b2eb-0c601877cd9a")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "MP" "SWD"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "37c9b9c5-7539-4fd1-94e9-9f450dcc31c0")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Purchase-URL" "https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=172681&manufacturer=3M&part_name=SWD&search_term=None"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "bb8f040b-40d9-4039-a71a-a4832f8f56b9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Availability" "In Stock"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "998d5b40-0bb1-4a0f-90fd-cb560bfb1c83")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Check_prices" "https://www.snapeda.com/parts/SWD/3M/view-part/?ref=eda"
+		(at 0 0 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b01cc711-e81d-48f9-bd79-c1b32f4841ff")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -5.625 -1.85)
+		(end -5.625 1.85)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "8dcb515b-c171-4e92-a1fd-a690112e78ec")
+	)
+	(fp_line
+		(start -5.625 1.85)
+		(end -1.175 1.85)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "bcbb9571-79d0-44d4-a8d6-d5b4c99c7149")
+	)
+	(fp_line
+		(start 5.625 -1.85)
+		(end -5.625 -1.85)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "5f0842ca-d0ec-4e70-90f4-58870d07a15f")
+	)
+	(fp_line
+		(start 5.625 -1.85)
+		(end 5.625 1.85)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "30539214-7584-487f-911d-51a907b9830b")
+	)
+	(fp_line
+		(start 5.625 1.85)
+		(end 1.175 1.85)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "7cf71cb5-8fb4-467d-bc8f-c5d4dc77befd")
+	)
+	(fp_text user "1"
+		(at -3.30252 3.30252 0)
+		(layer "F.SilkS")
+		(uuid "8042d06f-472e-48b0-a72a-c5495e159ce0")
+		(effects
+			(font
+				(size 1.000764 1.000764)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" thru_hole circle
+		(at -2.54 0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "e4ce9b08-f41a-4ee5-adf2-f3183941c959")
+	)
+	(pad "2" thru_hole circle
+		(at -2.54 -0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "a6562c95-092e-4c9d-8d38-8049d3c7a05b")
+	)
+	(pad "3" thru_hole circle
+		(at -1.27 0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "f19f99ed-3c32-4b8b-a398-70b149857a2e")
+	)
+	(pad "4" thru_hole circle
+		(at -1.27 -0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "7b8ce0ea-f0aa-4931-ab70-e0613f7a9ded")
+	)
+	(pad "5" thru_hole circle
+		(at 0 0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "d3898a2f-1911-40dc-8b9d-1344c2fe0ef1")
+	)
+	(pad "6" thru_hole circle
+		(at 0 -0.625)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "2e4f8564-d23d-4d2a-9b07-72acf32eb893")
+	)
+	(pad "7" thru_hole circle
+		(at 1.27 0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "25e4af66-748a-4161-9fec-de966c52bcf5")
+	)
+	(pad "8" thru_hole circle
+		(at 1.27 -0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "11bf0e82-82c1-4700-8e14-0bf6e4a25296")
+	)
+	(pad "9" thru_hole circle
+		(at 2.54 0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "850794f1-cb7d-4684-93be-78b77b6ee0f6")
+	)
+	(pad "10" thru_hole circle
+		(at 2.54 -0.635)
+		(size 0.8128 0.8128)
+		(drill 0.75)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.102)
+		(uuid "7e8e852d-965a-4c1d-b3be-0bb28ed197eb")
+	)
+)

@@ -1,145 +1,80 @@
 ** Drc report for Project-1.kicad_pcb **
-** Created on 2026-07-16T03:45:38+0200 **
+** Created on 2026-07-24T20:53:19+0200 **
 
-** Found 33 DRC violations **
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(91.8450 mm, 59.8200 mm): Pad 1 [unconnected-(Signal-generator2-COMP-Pad1)] of Signal-generator2 on F.Cu
-    @(91.8450 mm, 60.3200 mm): Pad 2 [VDD] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(91.8450 mm, 60.3200 mm): Pad 2 [VDD] of Signal-generator2 on F.Cu
-    @(91.8450 mm, 60.8200 mm): Pad 3 [Net-(Signal-generator2-CAP/2.5V)] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(91.8450 mm, 60.8200 mm): Pad 3 [Net-(Signal-generator2-CAP/2.5V)] of Signal-generator2 on F.Cu
-    @(91.8450 mm, 61.3200 mm): Pad 4 [GND] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(91.8450 mm, 61.3200 mm): Pad 4 [GND] of Signal-generator2 on F.Cu
-    @(91.8450 mm, 61.8200 mm): Pad 5 [Net-(25Mhz-Oscillator1-OUT)] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(96.1550 mm, 61.8200 mm): Pad 6 [Net-(Signal-generator2-SDATA)] of Signal-generator2 on F.Cu
-    @(96.1550 mm, 61.3200 mm): Pad 7 [Net-(Signal-generator2-SCLK)] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(96.1550 mm, 61.3200 mm): Pad 7 [Net-(Signal-generator2-SCLK)] of Signal-generator2 on F.Cu
-    @(96.1550 mm, 60.8200 mm): Pad 8 [Net-(Signal-generator2-FSYNC)] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(96.1550 mm, 60.8200 mm): Pad 8 [Net-(Signal-generator2-FSYNC)] of Signal-generator2 on F.Cu
-    @(96.1550 mm, 60.3200 mm): Pad 9 [GND] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(96.1550 mm, 60.3200 mm): Pad 9 [GND] of Signal-generator2 on F.Cu
-    @(96.1550 mm, 59.8200 mm): Pad 10 [Net-(Signal-generator2-VOUT)] of Signal-generator2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 50.3200 mm): Pad A1 [GND] of J2 on F.Cu
-    @(67.1650 mm, 49.8200 mm): Pad A2 [unconnected-(J2-TX1+-PadA2)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 49.8200 mm): Pad A2 [unconnected-(J2-TX1+-PadA2)] of J2 on F.Cu
-    @(67.1650 mm, 49.3200 mm): Pad A3 [unconnected-(J2-TX1--PadA3)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 49.3200 mm): Pad A3 [unconnected-(J2-TX1--PadA3)] of J2 on F.Cu
-    @(67.1650 mm, 48.8200 mm): Pad A4 [/VBUS-5V] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 48.8200 mm): Pad A4 [/VBUS-5V] of J2 on F.Cu
-    @(67.1650 mm, 48.3200 mm): Pad A5 [Net-(J2-CC1)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 48.3200 mm): Pad A5 [Net-(J2-CC1)] of J2 on F.Cu
-    @(67.1650 mm, 47.8200 mm): Pad A6 [Net-(J2-D+-PadA6)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 47.8200 mm): Pad A6 [Net-(J2-D+-PadA6)] of J2 on F.Cu
-    @(67.1650 mm, 47.3200 mm): Pad A7 [Net-(J2-D--PadA7)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 47.3200 mm): Pad A7 [Net-(J2-D--PadA7)] of J2 on F.Cu
-    @(67.1650 mm, 46.8200 mm): Pad A8 [unconnected-(J2-SBU1-PadA8)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 46.8200 mm): Pad A8 [unconnected-(J2-SBU1-PadA8)] of J2 on F.Cu
-    @(67.1650 mm, 46.3200 mm): Pad A9 [/VBUS-5V] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 46.3200 mm): Pad A9 [/VBUS-5V] of J2 on F.Cu
-    @(67.1650 mm, 45.8200 mm): Pad A10 [unconnected-(J2-RX2--PadA10)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 45.8200 mm): Pad A10 [unconnected-(J2-RX2--PadA10)] of J2 on F.Cu
-    @(67.1650 mm, 45.3200 mm): Pad A11 [unconnected-(J2-RX2+-PadA11)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(67.1650 mm, 45.3200 mm): Pad A11 [unconnected-(J2-RX2+-PadA11)] of J2 on F.Cu
-    @(67.1650 mm, 44.8200 mm): Pad A12 [GND] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 44.8200 mm): Pad B1 [GND] of J2 on F.Cu
-    @(68.8350 mm, 45.3200 mm): Pad B2 [unconnected-(J2-TX2+-PadB2)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 45.3200 mm): Pad B2 [unconnected-(J2-TX2+-PadB2)] of J2 on F.Cu
-    @(68.8350 mm, 45.8200 mm): Pad B3 [unconnected-(J2-TX2--PadB3)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 45.8200 mm): Pad B3 [unconnected-(J2-TX2--PadB3)] of J2 on F.Cu
-    @(68.8350 mm, 46.3200 mm): Pad B4 [/VBUS-5V] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 46.3200 mm): Pad B4 [/VBUS-5V] of J2 on F.Cu
-    @(68.8350 mm, 46.8200 mm): Pad B5 [Net-(J2-CC2)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 46.8200 mm): Pad B5 [Net-(J2-CC2)] of J2 on F.Cu
-    @(68.8350 mm, 47.3200 mm): Pad B6 [Net-(J2-D+-PadA6)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 47.3200 mm): Pad B6 [Net-(J2-D+-PadA6)] of J2 on F.Cu
-    @(68.8350 mm, 47.8200 mm): Pad B7 [Net-(J2-D--PadA7)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 47.8200 mm): Pad B7 [Net-(J2-D--PadA7)] of J2 on F.Cu
-    @(68.8350 mm, 48.3200 mm): Pad B8 [unconnected-(J2-SBU2-PadB8)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 48.3200 mm): Pad B8 [unconnected-(J2-SBU2-PadB8)] of J2 on F.Cu
-    @(68.8350 mm, 48.8200 mm): Pad B9 [/VBUS-5V] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 48.8200 mm): Pad B9 [/VBUS-5V] of J2 on F.Cu
-    @(68.8350 mm, 49.3200 mm): Pad B10 [unconnected-(J2-RX1--PadB10)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 49.3200 mm): Pad B10 [unconnected-(J2-RX1--PadB10)] of J2 on F.Cu
-    @(68.8350 mm, 49.8200 mm): Pad B11 [unconnected-(J2-RX1+-PadB11)] of J2 on F.Cu
-[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2000 mm)
-    Rule: netclass 'Default'; error
-    @(68.8350 mm, 49.8200 mm): Pad B11 [unconnected-(J2-RX1+-PadB11)] of J2 on F.Cu
-    @(68.8350 mm, 50.3200 mm): Pad B12 [GND] of J2 on F.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5 mm; actual 0.499999 mm)
-    Rule: board setup constraints edge; error
-    @(68.0000 mm, 43.8200 mm): NPTH pad of J2
-    @(68.8400 mm, 43.2621 mm): Track [GND] on F.Cu, length 0.6959 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.4701 mm)
-    Rule: board setup constraints edge; error
-    @(68.0000 mm, 43.8200 mm): NPTH pad of J2
-    @(67.1650 mm, 44.8200 mm): Pad A12 [GND] of J2 on F.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.4701 mm)
-    Rule: board setup constraints edge; error
-    @(68.0000 mm, 43.8200 mm): NPTH pad of J2
-    @(68.8350 mm, 44.8200 mm): Pad B1 [GND] of J2 on F.Cu
+** Found 22 DRC violations **
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(113.0000 mm, 87.0900 mm): PTH pad 1 [VDD] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(113.0000 mm, 85.8200 mm): PTH pad 2 [Net-(SWD-connector1-SWDIO)] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(114.2700 mm, 87.0900 mm): PTH pad 3 [GND] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(114.2700 mm, 85.8200 mm): PTH pad 4 [Net-(SWD-connector1-SWDCLK)] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(115.5400 mm, 87.0900 mm): PTH pad 5 [GND] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(115.5400 mm, 85.8300 mm): PTH pad 6 [Net-(SWD-connector1-SWO)] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(116.8100 mm, 87.0900 mm): PTH pad 7 [unconnected-(SWD-connector1-KEY-Pad7)] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(116.8100 mm, 85.8200 mm): PTH pad 8 [unconnected-(SWD-connector1-NC-Pad8)] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(118.0800 mm, 87.0900 mm): PTH pad 9 [GND] of SWD-connector1
+[annular_width]: Annular width (board setup constraints min annular width 0.1000 mm; actual 0.0314 mm)
+    Rule: board setup constraints; error
+    @(118.0800 mm, 85.8200 mm): PTH pad 10 [/M-NRST] of SWD-connector1
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(116.0000 mm, 92.0000 mm): Track [GND] on F.Cu, length 0.0700 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(114.0000 mm, 53.5700 mm): Track [VDD] on B.Cu, length 6.7500 mm
+[track_dangling]: Track has unconnected end
+    Local override; warning
+    @(110.4500 mm, 83.5500 mm): Track [Net-(SWD-connector1-SWDCLK)] on F.Cu, length 0.5500 mm
+[lib_footprint_mismatch]: Footprint '2X10_BOXHEADER' does not match copy in library 'Symbol'.
+    Local override; warning
+    @(115.5400 mm, 86.4550 mm): Footprint SWD-connector1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(139.0000 mm, 90.8200 mm): Reference 'Voltage-reference1'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(148.9500 mm, 84.3200 mm): Reference 'C18-100nF1'
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(124.6207 mm, 86.7202 mm): Reference 'SWD-connector1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(153.2900 mm, 84.8200 mm): Segment on F.Silkscreen
+    @(148.9500 mm, 84.3200 mm): Reference 'C18-100nF1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(139.0000 mm, 90.8200 mm): Reference 'Voltage-reference1'
+    @(145.7387 mm, 91.2650 mm): Segment on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(124.6207 mm, 86.7202 mm): Reference 'SWD-connector1'
+    @(126.5800 mm, 83.7500 mm): Reference 'C13-10uF1'
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(124.6207 mm, 86.7202 mm): Reference 'SWD-connector1'
+    @(129.0000 mm, 86.4600 mm): Segment on F.Silkscreen
+[silk_overlap]: Silkscreen overlap
+    Rule: board setup constraints silk; warning
+    @(124.6207 mm, 86.7202 mm): Reference 'SWD-connector1'
+    @(121.1650 mm, 84.6050 mm): Segment on F.Silkscreen
 
-** Found 1 unconnected pads **
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(69.5250 mm, 78.0100 mm): Pad 1 [/Electrode1] of U9 on F.Cu
-    @(70.7200 mm, 79.2800 mm): Track [/Electrode1] on F.Cu, length 1.1950 mm
+** Found 0 unconnected pads **
 
 ** Found 0 Footprint errors **
 

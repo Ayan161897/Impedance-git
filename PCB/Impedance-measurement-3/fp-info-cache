@@ -1,4 +1,4 @@
-24306074219208845
+24313222463318908
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -58001,6 +58001,20 @@ heatsink
 0
 0
 0
+Impedance-measurement-3
+2X10_BOXHEADER
+2x10 0.05in shrouded male header
+
+0
+10
+10
+Impedance-measurement-3
+MountingHole_3.2mm_M3_Pad
+Mounting Hole 3.2mm, M3
+mounting hole 3.2mm m3
+0
+0
+0
 Inductor_SMD
 L_6.3x6.3_H3
 Choke, SMD, 6.3x6.3mm 3mm height
@@ -91126,6 +91140,13 @@ MODULE_A000005
 30
 30
 Symbol
+MountingHole_3.2mm_M3_Pad
+Mounting Hole 3.2mm, M3
+mounting hole 3.2mm m3
+0
+0
+0
+Symbol
 OSHW-Logo2_7.3x6mm_Copper
 Open Source Hardware Symbol
 Logo Symbol OSHW
@@ -91636,6 +91657,13 @@ SOIC127P600X175-8N
 0
 8
 8
+Symbol
+SOIC127P600X175-14N
+
+
+0
+14
+14
 Symbol
 SOIC254P960X420-4N
 
