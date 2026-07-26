@@ -5838,6 +5838,12 @@
 		(uuid "6364bed5-b46c-4dd7-93f4-34c5f7148bd3")
 	)
 	(junction
+		(at 22.86 114.3)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "63828ea2-8480-4d51-af13-c66b03bec53c")
+	)
+	(junction
 		(at 187.96 138.43)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6102,12 +6108,6 @@
 		(uuid "bea6b91a-6ff0-4b57-b8ac-648887b17425")
 	)
 	(junction
-		(at 30.48 101.6)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "bf71a4b9-81e3-4292-a216-9df87ff99bd3")
-	)
-	(junction
 		(at 204.47 128.27)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -6148,6 +6148,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d0428c67-ba38-4633-a605-edffb81825e5")
+	)
+	(junction
+		(at 27.94 105.41)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "d06f8c40-303d-4448-a505-169f6fce3ba9")
 	)
 	(junction
 		(at 199.39 104.14)
@@ -6238,6 +6244,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "f92507c6-ea56-447e-a283-17103bda6722")
+	)
+	(junction
+		(at 29.21 92.71)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "f92d427b-5919-4cd4-9cf7-886cde883d18")
 	)
 	(junction
 		(at 97.79 146.05)
@@ -6417,6 +6429,16 @@
 	)
 	(wire
 		(pts
+			(xy 27.94 105.41) (xy 27.94 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0acbdf92-d252-4a80-83b5-259d5d1d6f83")
+	)
+	(wire
+		(pts
 			(xy 88.9 114.3) (xy 90.17 114.3)
 		)
 		(stroke
@@ -6534,6 +6556,16 @@
 			(type default)
 		)
 		(uuid "0fdde086-789b-4734-ab47-681516e126d5")
+	)
+	(wire
+		(pts
+			(xy 22.86 114.3) (xy 30.48 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "102167eb-c39d-4e2c-a7c1-fa0a5758d937")
 	)
 	(wire
 		(pts
@@ -6707,6 +6739,16 @@
 	)
 	(wire
 		(pts
+			(xy 27.94 102.87) (xy 27.94 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "19116a7b-1710-4996-8d78-8fde8b47d547")
+	)
+	(wire
+		(pts
 			(xy 204.47 101.6) (xy 204.47 104.14)
 		)
 		(stroke
@@ -6737,7 +6779,7 @@
 	)
 	(wire
 		(pts
-			(xy 34.29 113.03) (xy 34.29 101.6)
+			(xy 33.02 113.03) (xy 33.02 111.76)
 		)
 		(stroke
 			(width 0)
@@ -6754,6 +6796,16 @@
 			(type default)
 		)
 		(uuid "1a0634b3-80a2-47d4-b0ee-2dfef60bdb84")
+	)
+	(wire
+		(pts
+			(xy 29.21 100.33) (xy 29.21 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a351a25-be3f-4115-96df-5e0aa22a4573")
 	)
 	(wire
 		(pts
@@ -7217,6 +7269,16 @@
 	)
 	(wire
 		(pts
+			(xy 29.21 105.41) (xy 27.94 105.41)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2bf42b8e-0890-480f-b811-c0b60a56d07d")
+	)
+	(wire
+		(pts
 			(xy 120.65 58.42) (xy 137.16 58.42)
 		)
 		(stroke
@@ -7504,16 +7566,6 @@
 			(type default)
 		)
 		(uuid "3a3e7e5b-759c-4320-b95f-fe34c04a0c11")
-	)
-	(wire
-		(pts
-			(xy 30.48 101.6) (xy 22.86 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3a5d8440-887f-4279-a88a-ac403e4d6e33")
 	)
 	(wire
 		(pts
@@ -7884,6 +7936,16 @@
 			(type default)
 		)
 		(uuid "53457636-18fc-4383-949e-a308dd5af762")
+	)
+	(wire
+		(pts
+			(xy 22.86 114.3) (xy 22.86 116.84)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5368d731-58e2-4da7-972e-c82ae8172d62")
 	)
 	(wire
 		(pts
@@ -8387,6 +8449,16 @@
 	)
 	(wire
 		(pts
+			(xy 27.94 100.33) (xy 29.21 100.33)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a0483e0-b697-4f3b-bf73-e2e21add897a")
+	)
+	(wire
+		(pts
 			(xy 121.92 83.82) (xy 137.16 83.82)
 		)
 		(stroke
@@ -8494,6 +8566,16 @@
 			(type default)
 		)
 		(uuid "6e785afa-9671-4ab3-88e9-ceba44192d8c")
+	)
+	(wire
+		(pts
+			(xy 30.48 115.57) (xy 30.48 114.3)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6ecf3174-883f-42f0-a1ef-f19f73e65910")
 	)
 	(wire
 		(pts
@@ -9087,7 +9169,7 @@
 	)
 	(wire
 		(pts
-			(xy 43.18 113.03) (xy 34.29 113.03)
+			(xy 43.18 113.03) (xy 33.02 113.03)
 		)
 		(stroke
 			(width 0)
@@ -9247,7 +9329,7 @@
 	)
 	(wire
 		(pts
-			(xy 22.86 101.6) (xy 22.86 106.68)
+			(xy 22.86 111.76) (xy 22.86 114.3)
 		)
 		(stroke
 			(width 0)
@@ -9334,6 +9416,16 @@
 			(type default)
 		)
 		(uuid "9458d8a1-6f05-4c7f-8aca-0d461e417f12")
+	)
+	(wire
+		(pts
+			(xy 27.94 92.71) (xy 29.21 92.71)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "94805087-093a-420c-85a0-70ab9d07a7df")
 	)
 	(wire
 		(pts
@@ -9444,6 +9536,16 @@
 			(type default)
 		)
 		(uuid "973fa295-0eb4-46f6-89a2-df2802d0cb92")
+	)
+	(wire
+		(pts
+			(xy 29.21 92.71) (xy 29.21 88.9)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "97e7caa3-f727-483b-b3c8-9efd72344703")
 	)
 	(wire
 		(pts
@@ -9924,16 +10026,6 @@
 			(type default)
 		)
 		(uuid "b0bfc97b-5569-4e53-a87a-8ec30b38614f")
-	)
-	(wire
-		(pts
-			(xy 30.48 115.57) (xy 30.48 101.6)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "b0e9fa1c-9be4-4949-84e8-392c305a46b5")
 	)
 	(wire
 		(pts
@@ -11077,6 +11169,16 @@
 	)
 	(wire
 		(pts
+			(xy 29.21 95.25) (xy 27.94 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "e8bb5f86-4ae4-4d11-9853-16d778a5dcb0")
+	)
+	(wire
+		(pts
 			(xy 43.18 13.97) (xy 43.18 16.51)
 		)
 		(stroke
@@ -11307,7 +11409,7 @@
 	)
 	(wire
 		(pts
-			(xy 34.29 101.6) (xy 30.48 101.6)
+			(xy 22.86 111.76) (xy 33.02 111.76)
 		)
 		(stroke
 			(width 0)
@@ -11434,6 +11536,16 @@
 			(type default)
 		)
 		(uuid "f6e7a3be-d6a8-49ef-b5be-b1ab3860771d")
+	)
+	(wire
+		(pts
+			(xy 29.21 92.71) (xy 29.21 95.25)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f6f85a14-a7c6-4067-b73d-886218aa4d80")
 	)
 	(wire
 		(pts
@@ -11790,6 +11902,17 @@
 		)
 		(uuid "2fbd2d47-86b0-4758-afca-ddd05b3400af")
 	)
+	(label "Electrode2"
+		(at 27.94 107.95 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "41ad3e13-bec9-4143-9b32-768dac5acfab")
+	)
 	(label "VBUS-5V"
 		(at 271.78 39.37 0)
 		(fields_autoplaced yes)
@@ -11833,6 +11956,17 @@
 			(justify left bottom)
 		)
 		(uuid "891f92d3-af38-45d6-85dc-9612cc4b4f18")
+	)
+	(label "Electrode1"
+		(at 29.21 88.9 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8deb94c2-83c6-4850-9b43-78ef8ec6c453")
 	)
 	(label "VBUS-5V"
 		(at 71.12 17.78 0)
@@ -16427,7 +16561,7 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 22.86 106.68 0)
+		(at 22.86 116.84 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -16435,7 +16569,7 @@
 		(dnp no)
 		(uuid "a104174d-fa19-41eb-987a-148892190a23")
 		(property "Reference" "#PWR09"
-			(at 22.86 113.03 0)
+			(at 22.86 123.19 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16444,7 +16578,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 25.146 105.41 0)
+			(at 25.146 115.57 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16452,7 +16586,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 22.86 106.68 0)
+			(at 22.86 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16461,7 +16595,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 22.86 106.68 0)
+			(at 22.86 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -16470,7 +16604,7 @@
 			)
 		)
 		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
-			(at 22.86 106.68 0)
+			(at 22.86 116.84 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17899,6 +18033,207 @@
 			(project ""
 				(path "/ded411bd-4c6d-4bca-8aa2-0255249bdd26"
 					(reference "25Mhz-Oscillator1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "5 pos cable connector B5B-XH-A_LF__SN_:B5B-XH-A_LF__SN_")
+		(at 20.32 97.79 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "dc048429-a785-4d5c-9ac3-54110ab279b2")
+		(property "Reference" "Electrode-Connection2"
+			(at 15.24 108.458 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Cable-connector B5B-XH-A_LF__SN_"
+			(at 15.24 99.0599 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector:JST_B5B-XH-A_LF__SN_"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MF" "JST Sales"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "MAXIMUM_PACKAGE_HEIGHT" "7.00 mm"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Package" "None"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Price" "None"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Check_prices" "https://www.snapeda.com/parts/B5B-XH-A(LF)(SN)/JST/view-part/?ref=eda"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "STANDARD" "Manufacturer Recommendations"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "PARTREV" "7/4/21"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "SnapEDA_Link" "https://www.snapeda.com/parts/B5B-XH-A(LF)(SN)/JST/view-part/?ref=snap"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "MP" "B5B-XH-A(LF)(SN)"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Description_1" "\n                        \n                            Connector Header Through Hole 5 position 0.098 (2.50mm)\n                        \n"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "Availability" "In Stock"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(property "MANUFACTURER" "JST"
+			(at 20.32 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify bottom)
+				(hide yes)
+			)
+		)
+		(pin "3"
+			(uuid "c52bca7c-70c6-4c1c-82f7-c1b19c28b310")
+		)
+		(pin "1"
+			(uuid "b401453a-363b-451a-bb02-3dd227e8f1e5")
+		)
+		(pin "5"
+			(uuid "7c281fee-7eea-477e-8c49-a69c15b8bdde")
+		)
+		(pin "4"
+			(uuid "fe6e837d-f18f-4426-a269-d99df153bec8")
+		)
+		(pin "2"
+			(uuid "4d5342e8-e3fb-42eb-89d1-fe242e7e91a0")
+		)
+		(instances
+			(project "Project-1"
+				(path "/ded411bd-4c6d-4bca-8aa2-0255249bdd26"
+					(reference "Electrode-Connection2")
 					(unit 1)
 				)
 			)
