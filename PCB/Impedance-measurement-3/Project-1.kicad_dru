@@ -18,3 +18,15 @@
 	(condition "A.insideCourtyard('J2') || B.insideCourtyard('J2')")
 	(constraint edge_clearance (min 0.4mm))
 )
+
+# SWD-connector1's PTH pads were enlarged (0.8128mm -> 1.05mm) to fix an
+# annular-width fabrication error (was 0.0314mm vs 0.1mm minimum). At this
+# connector's fixed 1.27mm pin pitch, a pad that wide leaves only
+# ~0.21-0.22mm between adjacent pads -- below the board's 0.3mm default but
+# still a real, physically valid air gap. Same rationale as the fine-pitch
+# exception above: relax locally rather than shrink the pads back down and
+# reintroduce the annular-width problem.
+(rule "SWD_connector1_pad_clearance_exception"
+	(condition "A.insideCourtyard('SWD-connector1') || B.insideCourtyard('SWD-connector1')")
+	(constraint clearance (min 0.15mm))
+)
