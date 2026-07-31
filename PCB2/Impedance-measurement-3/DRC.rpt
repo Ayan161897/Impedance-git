@@ -1,0 +1,82 @@
+** Drc report for Project-1.kicad_pcb **
+** Created on 2026-07-29T04:39:08+0200 **
+
+** Found 18 DRC violations **
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(146.5000 mm, 55.1900 mm): Pad 28 [Net-(USB-UART(CP2102)1-DTR)] of USB-UART(CP2102 on F.Cu
+    @(146.0000 mm, 55.1900 mm): Pad 27 [unconnected-(USB-UART(CP2102)1-DSR-Pad27)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(146.0000 mm, 55.1900 mm): Pad 27 [unconnected-(USB-UART(CP2102)1-DSR-Pad27)] of USB-UART(CP2102 on F.Cu
+    @(145.5000 mm, 55.1900 mm): Pad 26 [/USB-TXD] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(145.5000 mm, 55.1900 mm): Pad 26 [/USB-TXD] of USB-UART(CP2102 on F.Cu
+    @(145.0000 mm, 55.1900 mm): Pad 25 [/USB-RXD] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(145.0000 mm, 55.1900 mm): Pad 25 [/USB-RXD] of USB-UART(CP2102 on F.Cu
+    @(144.5000 mm, 55.1900 mm): Pad 24 [unconnected-(USB-UART(CP2102)1-RTS-Pad24)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(144.5000 mm, 55.1900 mm): Pad 24 [unconnected-(USB-UART(CP2102)1-RTS-Pad24)] of USB-UART(CP2102 on F.Cu
+    @(144.0000 mm, 55.1900 mm): Pad 23 [unconnected-(USB-UART(CP2102)1-CTS-Pad23)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(144.0000 mm, 55.1900 mm): Pad 23 [unconnected-(USB-UART(CP2102)1-CTS-Pad23)] of USB-UART(CP2102 on F.Cu
+    @(143.5000 mm, 55.1900 mm): Pad 22 [Net-(USB-UART(CP2102)1-NC-Pad10)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(144.0000 mm, 50.4500 mm): Pad 13 [Net-(USB-UART(CP2102)1-NC-Pad10)] of USB-UART(CP2102 on F.Cu
+    @(144.5000 mm, 50.4500 mm): Pad 12 [unconnected-(USB-UART(CP2102)1-SUSPEND-Pad12)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(144.5000 mm, 50.4500 mm): Pad 12 [unconnected-(USB-UART(CP2102)1-SUSPEND-Pad12)] of USB-UART(CP2102 on F.Cu
+    @(145.0000 mm, 50.4500 mm): Pad 11 [unconnected-(USB-UART(CP2102)1-~{SUSPEND}-Pad11)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(145.0000 mm, 50.4500 mm): Pad 11 [unconnected-(USB-UART(CP2102)1-~{SUSPEND}-Pad11)] of USB-UART(CP2102 on F.Cu
+    @(145.5000 mm, 50.4500 mm): Pad 10 [Net-(USB-UART(CP2102)1-NC-Pad10)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(145.5000 mm, 50.4500 mm): Pad 10 [Net-(USB-UART(CP2102)1-NC-Pad10)] of USB-UART(CP2102 on F.Cu
+    @(146.0000 mm, 50.4500 mm): Pad 9 [Net-(USB-UART(CP2102)1-~{RST})] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(146.0000 mm, 50.4500 mm): Pad 9 [Net-(USB-UART(CP2102)1-~{RST})] of USB-UART(CP2102 on F.Cu
+    @(146.5000 mm, 50.4500 mm): Pad 8 [/VBUS-5V] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(147.3700 mm, 51.3200 mm): Pad 7 [/VBUS-5V] of USB-UART(CP2102 on F.Cu
+    @(147.3700 mm, 51.8200 mm): Pad 6 [VDD] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(147.3700 mm, 51.8200 mm): Pad 6 [VDD] of USB-UART(CP2102 on F.Cu
+    @(147.3700 mm, 52.3200 mm): Pad 5 [Net-(USB-UART(CP2102)1-D-)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(147.3700 mm, 52.3200 mm): Pad 5 [Net-(USB-UART(CP2102)1-D-)] of USB-UART(CP2102 on F.Cu
+    @(147.3700 mm, 52.8200 mm): Pad 4 [Net-(USB-UART(CP2102)1-D+)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(147.3700 mm, 52.8200 mm): Pad 4 [Net-(USB-UART(CP2102)1-D+)] of USB-UART(CP2102 on F.Cu
+    @(147.3700 mm, 53.3200 mm): Pad 3 [GND] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(147.3700 mm, 53.3200 mm): Pad 3 [GND] of USB-UART(CP2102 on F.Cu
+    @(147.3700 mm, 53.8200 mm): Pad 2 [unconnected-(USB-UART(CP2102)1-RI-Pad2)] of USB-UART(CP2102 on F.Cu
+[clearance]: Clearance violation (netclass 'Default' clearance 0.3000 mm; actual 0.2400 mm)
+    Rule: netclass 'Default'; error
+    @(147.3700 mm, 53.8200 mm): Pad 2 [unconnected-(USB-UART(CP2102)1-RI-Pad2)] of USB-UART(CP2102 on F.Cu
+    @(147.3700 mm, 54.3200 mm): Pad 1 [unconnected-(USB-UART(CP2102)1-DCD-Pad1)] of USB-UART(CP2102 on F.Cu
+[starved_thermal]: Thermal relief connection to zone incomplete (layer B.Cu; 4 spokes connected to isolated island)
+    Local override; error
+    @(62.5000 mm, 36.0000 mm): Zone [GND] on B.Cu
+    @(120.0000 mm, 81.7500 mm): PTH pad 2 [GND] of C13-22pF1
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **
