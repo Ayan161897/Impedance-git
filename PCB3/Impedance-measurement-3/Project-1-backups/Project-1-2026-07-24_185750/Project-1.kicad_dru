@@ -1,0 +1,20 @@
+(version 1)
+
+# Local clearance exception for fine-pitch parts (0.5mm pin pitch), where the
+# bare pads themselves are physically closer together than the board's general
+# 0.3mm clearance target allows. Global board clearance stays at 0.3mm to meet
+# the milling-machine requirement everywhere else; this rule only relaxes it
+# right at these four footprints where the component pitch forces it.
+(rule "fine_pitch_clearance_exception"
+	(condition "A.insideCourtyard('U1') || B.insideCourtyard('U1') || A.insideCourtyard('Signal-generator2') || B.insideCourtyard('Signal-generator2') || A.insideCourtyard('USB-UART(CP2102)1') || B.insideCourtyard('USB-UART(CP2102)1') || A.insideCourtyard('J2') || B.insideCourtyard('J2')")
+	(constraint clearance (min 0.15mm))
+)
+
+# J2's mechanical/NPTH shield-leg hole sits close to its own footprint's
+# adjacent GND pads (standard GCT USB4115-03-C library geometry) -- misses
+# our board's strict 0.5mm edge-clearance target by only 0.0003-0.03mm.
+# Same rationale as above: relax locally rather than loosen the board-wide rule.
+(rule "J2_npth_edge_clearance_exception"
+	(condition "A.insideCourtyard('J2') || B.insideCourtyard('J2')")
+	(constraint edge_clearance (min 0.4mm))
+)
