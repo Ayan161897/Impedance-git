@@ -1,12 +1,11 @@
 import sys
 import re
-import math
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QToolBar, QComboBox, QLabel, QPushButton, QTextEdit,
     QSplitter, QFileDialog, QMessageBox
 )
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QTextCursor, QFont
 
 from serial_worker import SerialWorker
@@ -31,6 +30,11 @@ class MainWindow(QMainWindow):
         self._setup_ui()
         self._connect_signals()
         self._refresh_ports()
+
+        self._sweep_watchdog = QTimer(self)
+        self._sweep_watchdog.setSingleShot(True)
+        self._sweep_watchdog.setInterval(5000)
+        self._sweep_watchdog.timeout.connect(self._on_sweep_timeout)
 
     # ------------------------------------------------------------------ UI --
 
@@ -186,7 +190,7 @@ class MainWindow(QMainWindow):
         self.connect_btn.setText("Disconnect")
         self.lbl_conn.setText("  ● Connected  ")
         self.lbl_port_info.setText(f"Port: {port}")
-        for btn in [self.start_btn, self.stop_btn, self.status_btn,
+        for btn in [self.start_btn, self.status_btn,
                     self.flash_status_btn, self.dump_flash_btn,
                     self.erase_flash_btn]:
             btn.setEnabled(True)
@@ -194,6 +198,8 @@ class MainWindow(QMainWindow):
 
     def _on_serial_disconnected(self):
         self._connected = False
+        self._sweep_running = False
+        self._sweep_watchdog.stop()
         self.connect_btn.setText("Connect")
         self.lbl_conn.setText("  ● Disconnected  ")
         self.lbl_port_info.setText("Port: —")
@@ -205,6 +211,13 @@ class MainWindow(QMainWindow):
 
     def _on_serial_error(self, msg):
         self._log("ERROR: " + msg, "error")
+
+    def _on_sweep_timeout(self):
+        if self._sweep_running:
+            self._sweep_running = False
+            self.stop_btn.setEnabled(False)
+            self.config_panel.update_status("IDLE")
+            self._log("WARNING: No data received for 5 s — sweep timed out", "error")
 
     # ---------------------------------------------------------- commands --
 
@@ -270,15 +283,26 @@ class MainWindow(QMainWindow):
             self._log("← " + line, "rx")
         elif line.startswith("SWEEP,BEGIN"):
             self._sweep_running = True
+            self.stop_btn.setEnabled(True)
+            self._sweep_watchdog.start()
             self.config_panel.update_status("RUNNING")
             self._log("← " + line, "rx")
         elif line.startswith("SWEEP,DONE"):
             self._sweep_running = False
+            self.stop_btn.setEnabled(False)
+            self._sweep_watchdog.stop()
             self.config_panel.update_status(
                 "IDLE",
                 points_done=self._points_done,
                 total_points=self._points_done
             )
+            self._log("← " + line, "rx")
+        elif line.startswith("FLASH_DUMP,BEGIN"):
+            self.data.clear()
+            self.plot_widget.clear_plots()
+            self._points_done = 0
+            self.lbl_pts_info.setText("Points: 0")
+            self.export_btn.setEnabled(False)
             self._log("← " + line, "rx")
         elif line.startswith("ERROR"):
             self._log("← " + line, "error")
@@ -286,18 +310,19 @@ class MainWindow(QMainWindow):
             self._log("← " + line, "rx")
 
     def _parse_data(self, line):
-        # DATA,<freq>,<mag>.<xx>,<[+-]phase>.<xx>
+        # DATA,<freq>,<mag>,<phase>,<real>,<imag>
         parts = line.split(',')
-        if len(parts) >= 4:
+        if len(parts) >= 6:
             try:
                 freq  = float(parts[1])
                 mag   = float(parts[2])
                 phase = float(parts[3])
-                real  = mag * math.cos(math.radians(phase))
-                imag  = mag * math.sin(math.radians(phase))
+                real  = float(parts[4])
+                imag  = float(parts[5])
 
                 self.data.add_point(freq, mag, phase, real, imag)
                 self._points_done += 1
+                self._sweep_watchdog.start()
 
                 self.config_panel.update_last_point(freq, mag, phase, real, imag)
                 self.config_panel.update_status(

@@ -35,6 +35,13 @@ void AD9833_WriteRegister(uint16_t data)
     tx[0] = (data >> 8) & 0xFF;
     tx[1] = data & 0xFF;
 
+    /* AD9833 requires SPI Mode 2 (CPOL=1, CPHA=0): clock idle HIGH.
+       SPI1 is normally in Mode 0 for the W25Q32, so switch here and
+       restore afterwards. SPE must be cleared before changing CPOL. */
+    hspi1.Instance->CR1 &= ~SPI_CR1_SPE;
+    hspi1.Instance->CR1 = (hspi1.Instance->CR1 & ~SPI_CR1_CPHA) | SPI_CR1_CPOL;
+    hspi1.Instance->CR1 |= SPI_CR1_SPE;
+
     FSYNC_LOW();
 
     HAL_SPI_Transmit(&hspi1,
@@ -43,6 +50,11 @@ void AD9833_WriteRegister(uint16_t data)
                      HAL_MAX_DELAY);
 
     FSYNC_HIGH();
+
+    /* Restore Mode 0 (CPOL=0, CPHA=0) for W25Q32 */
+    hspi1.Instance->CR1 &= ~SPI_CR1_SPE;
+    hspi1.Instance->CR1 &= ~(SPI_CR1_CPOL | SPI_CR1_CPHA);
+    hspi1.Instance->CR1 |= SPI_CR1_SPE;
 }
 
 /* =========================================================
@@ -95,15 +107,14 @@ void AD9833_SetFrequency(uint32_t frequency)
         AD9833_FREQ0_REGISTER |
         ((freqWord >> 14) & 0x3FFF);
 
-    AD9833_WriteRegister(
-        AD9833_B28 | AD9833_RESET);
+    /* Write B28 control word (no RESET) then both frequency words.
+       Omitting RESET keeps the DAC running between frequency steps,
+       preventing output glitches during a sweep. */
+    AD9833_WriteRegister(AD9833_B28);
 
     AD9833_WriteRegister(lsb);
 
     AD9833_WriteRegister(msb);
-
-    AD9833_WriteRegister(
-        AD9833_B28);
 }
 
 /* =========================================================
@@ -184,23 +195,3 @@ void AD9833_SetSquareOutput(void)
     AD9833_SetWaveform(AD9833_SQUARE);
 }
 
-/* =========================================================
-   FREQUENCY SWEEP
-   ========================================================= */
-
-void AD9833_FrequencySweep(uint32_t start_freq,
-                           uint32_t stop_freq,
-                           uint32_t step_freq,
-                           uint32_t delay_ms)
-{
-    uint32_t freq;
-
-    for(freq = start_freq;
-        freq <= stop_freq;
-        freq += step_freq)
-    {
-        AD9833_SetFrequency(freq);
-
-        HAL_Delay(delay_ms);
-    }
-}

@@ -48,10 +48,6 @@ uint8_t tx_buffer[64];
 
 uint8_t rx_buffer[64];
 
-uint8_t flash_tx[5] = {1,2,3,4,5};
-
-uint8_t flash_rx[5];
-
 uint32_t flash_id;
 
 volatile uint8_t measurement_running = 0;
@@ -241,7 +237,7 @@ void Process_DumpFlash_Command(void)
 
 void Process_SetStartFrequency(uint32_t value)
 {
-    if(measurement_running || value == 0U || value > sweep_stop_frequency)
+    if(measurement_running || value == 0U || value > sweep_stop_frequency || value > (AD9833_MCLK / 2UL))
     {
         UART_SendString("ERROR,BAD_VALUE\r\n");
         return;
@@ -253,7 +249,7 @@ void Process_SetStartFrequency(uint32_t value)
 
 void Process_SetStopFrequency(uint32_t value)
 {
-    if(measurement_running || value < sweep_start_frequency)
+    if(measurement_running || value < sweep_start_frequency || value > (AD9833_MCLK / 2UL))
     {
         UART_SendString("ERROR,BAD_VALUE\r\n");
         return;
@@ -332,9 +328,6 @@ int main(void)
      ADC CALIBRATION
      ========================================= */
 
-  /* HAL_ADCEx_Calibration_Start(&hadc1,
-                              ADC_SINGLE_ENDED);*/
-
   /* =========================================
      IMPEDANCE MODULE INIT
      ========================================= */
@@ -349,12 +342,12 @@ int main(void)
 
   flash_id = W25Q32_ReadID();
 
-  printf("FLASH ID = 0x%08lX\r\n",
-         flash_id);
-
-  /* =========================================
-     FLASH TEST
-     ========================================= */
+  if(flash_id != W25Q32_JEDEC_ID)
+  {
+      printf("BOOT,WARNING,FLASH_ID_MISMATCH,EXPECTED=0x%06lX,GOT=0x%06lX\r\n",
+             (unsigned long)W25Q32_JEDEC_ID,
+             (unsigned long)(flash_id & 0x00FFFFFFUL));
+  }
 
   printf("FLASH,ID,0x%08lX\r\n",
          flash_id);
@@ -380,65 +373,9 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-      UART_ProcessCommand();
+    /* USER CODE END WHILE */
 
-      if(measurement_running)
-      {
-          BodePoint result;
-
-          UART_SendString("SWEEP,BEGIN\r\n");
-
-          for(uint32_t freq = sweep_start_frequency;
-              freq <= sweep_stop_frequency;
-              freq += sweep_step_frequency)
-          {
-              UART_ProcessCommand();
-
-              if(!measurement_running)
-              {
-                  break;
-              }
-
-              AD9833_SetFrequency(freq);
-
-              Delay_With_Command_Processing(20);
-
-              if(!measurement_running)
-              {
-                  break;
-              }
-
-              result = Imp_MeasureAtFrequency(
-                          freq,
-                          feedback_resistor);
-
-              UART_SendImpedanceData(freq,
-                                     result.magnitude,
-                                     result.phaseDeg);
-
-              FlashLogStatus flash_status =
-                      FlashLog_WritePoint(freq, &result);
-
-              if(flash_status == FLASH_LOG_FULL)
-              {
-                  UART_SendString("ERROR,FLASH_FULL\r\n");
-              }
-              else if(flash_status != FLASH_LOG_OK)
-              {
-                  UART_SendString("ERROR,FLASH_WRITE\r\n");
-              }
-
-              HAL_GPIO_TogglePin(
-                      STATUS_LED_GPIO_Port,
-                      STATUS_LED_Pin);
-
-              Delay_With_Command_Processing(SWEEP_DELAY_MS);
-          }
-
-          measurement_running = 0;
-          UART_SendString("SWEEP,DONE\r\n");
-          Send_Status();
-      }
+    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
@@ -640,8 +577,6 @@ static void MX_USART1_UART_Init(void)
 
 }
 
-
-
 /**
   * Enable DMA controller clock
   */
@@ -690,6 +625,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(AD9833_FSYNC_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PB2 */
+  GPIO_InitStruct.Pin = GPIO_PIN_2;
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pin : W25Q32_CS_Pin */
   GPIO_InitStruct.Pin = W25Q32_CS_Pin;

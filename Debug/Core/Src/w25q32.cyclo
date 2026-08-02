@@ -1,9 +1,9 @@
 ../Core/Src/w25q32.c:23:6:W25Q32_Init	1
 ../Core/Src/w25q32.c:36:6:W25Q32_WriteEnable	1
 ../Core/Src/w25q32.c:55:9:W25Q32_ReadStatus	1
-../Core/Src/w25q32.c:83:6:W25Q32_WaitBusy	2
-../Core/Src/w25q32.c:94:10:W25Q32_ReadID	1
-../Core/Src/w25q32.c:124:6:W25Q32_SectorErase	1
-../Core/Src/w25q32.c:158:6:W25Q32_ChipErase	1
-../Core/Src/w25q32.c:181:6:W25Q32_WritePage	1
-../Core/Src/w25q32.c:222:6:W25Q32_ReadData	1
+../Core/Src/w25q32.c:83:9:W25Q32_WaitBusy	3
+../Core/Src/w25q32.c:102:10:W25Q32_ReadID	1
+../Core/Src/w25q32.c:132:6:W25Q32_SectorErase	1
+../Core/Src/w25q32.c:166:6:W25Q32_ChipErase	1
+../Core/Src/w25q32.c:189:6:W25Q32_WritePage	1
+../Core/Src/w25q32.c:230:6:W25Q32_ReadData	1

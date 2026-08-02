@@ -10,7 +10,7 @@
 ../Core/Src/uart_comm.c:54:13:Process_SetFeedbackResistor	16	static
 ../Core/Src/uart_comm.c:71:6:UART_Comm_Init	16	static
 ../Core/Src/uart_comm.c:85:6:UART_SendString	24	static
-../Core/Src/uart_comm.c:98:6:UART_SendImpedanceData	208	static
-../Core/Src/uart_comm.c:139:6:UART_RxCpltCallback	16	static
-../Core/Src/uart_comm.c:162:6:HAL_UART_RxCpltCallback	16	static
-../Core/Src/uart_comm.c:171:6:UART_ProcessCommand	8	static
+../Core/Src/uart_comm.c:98:6:UART_SendImpedanceData	336	static
+../Core/Src/uart_comm.c:151:6:UART_RxCpltCallback	16	static
+../Core/Src/uart_comm.c:174:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/uart_comm.c:183:6:UART_ProcessCommand	136	static,ignoring_inline_asm

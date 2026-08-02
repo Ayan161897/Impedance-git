@@ -93,11 +93,6 @@ void AD9833_Reset(void);
 
 void AD9833_SetFrequency(uint32_t frequency);
 
-void AD9833_FrequencySweep(uint32_t start_freq,
-                           uint32_t stop_freq,
-                           uint32_t step_freq,
-                           uint32_t delay_ms);
-
 /* Phase control */
 
 void AD9833_SetPhase(uint16_t phase);

@@ -80,11 +80,19 @@ uint8_t W25Q32_ReadStatus(void)
    WAIT BUSY
    ========================================================= */
 
-void W25Q32_WaitBusy(void)
+uint8_t W25Q32_WaitBusy(uint32_t timeout_ms)
 {
+    uint32_t start = HAL_GetTick();
+
     while(W25Q32_ReadStatus() & 0x01)
     {
+        if((HAL_GetTick() - start) >= timeout_ms)
+        {
+            return 0;
+        }
     }
+
+    return 1;
 }
 
 /* =========================================================
@@ -148,7 +156,7 @@ void W25Q32_SectorErase(uint32_t address)
 
     FLASH_CS_HIGH();
 
-    W25Q32_WaitBusy();
+    W25Q32_WaitBusy(500U);
 }
 
 /* =========================================================
@@ -171,7 +179,7 @@ void W25Q32_ChipErase(void)
 
     FLASH_CS_HIGH();
 
-    W25Q32_WaitBusy();
+    W25Q32_WaitBusy(65000U);
 }
 
 /* =========================================================
@@ -212,7 +220,7 @@ void W25Q32_WritePage(uint32_t address,
 
     FLASH_CS_HIGH();
 
-    W25Q32_WaitBusy();
+    W25Q32_WaitBusy(10U);
 }
 
 /* =========================================================

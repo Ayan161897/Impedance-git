@@ -95,36 +95,48 @@ void UART_SendString(const char *str)
 /* ===================================================================
    Send Impedance Data
    =================================================================== */
-void UART_SendImpedanceData(uint32_t freq, float magnitude, float phase)
+void UART_SendImpedanceData(uint32_t freq, float magnitude, float phase,
+                            float real_part, float imag_part)
 {
-    char buffer[128];
-    uint32_t magnitude_x100;
-    int32_t phase_x100;
-    uint32_t phase_abs_x100;
+    char buffer[192];
+    uint32_t mag_x100;
+    int32_t  phase_x100;
+    int32_t  real_x100;
+    int32_t  imag_x100;
+    uint32_t phase_abs;
+    uint32_t real_abs;
+    uint32_t imag_abs;
+    int len;
 
-    magnitude_x100 = (uint32_t)((magnitude * 100.0f) + 0.5f);
+    mag_x100   = (uint32_t)((magnitude  * 100.0f) + 0.5f);
+    phase_x100 = (phase     >= 0.0f) ?
+                 (int32_t)((phase     * 100.0f) + 0.5f) :
+                 (int32_t)((phase     * 100.0f) - 0.5f);
+    real_x100  = (real_part >= 0.0f) ?
+                 (int32_t)((real_part * 100.0f) + 0.5f) :
+                 (int32_t)((real_part * 100.0f) - 0.5f);
+    imag_x100  = (imag_part >= 0.0f) ?
+                 (int32_t)((imag_part * 100.0f) + 0.5f) :
+                 (int32_t)((imag_part * 100.0f) - 0.5f);
 
-    if(phase >= 0.0f)
-    {
-        phase_x100 = (int32_t)((phase * 100.0f) + 0.5f);
-    }
-    else
-    {
-        phase_x100 = (int32_t)((phase * 100.0f) - 0.5f);
-    }
+    phase_abs = (phase_x100 < 0) ? (uint32_t)(-phase_x100) : (uint32_t)phase_x100;
+    real_abs  = (real_x100  < 0) ? (uint32_t)(-real_x100)  : (uint32_t)real_x100;
+    imag_abs  = (imag_x100  < 0) ? (uint32_t)(-imag_x100)  : (uint32_t)imag_x100;
 
-    phase_abs_x100 = (phase_x100 < 0) ?
-                     (uint32_t)(-phase_x100) :
-                     (uint32_t)phase_x100;
-
-    int len = snprintf(buffer, sizeof(buffer),
-                      "DATA,%lu,%lu.%02lu,%s%lu.%02lu\r\n",
-                      freq,
-                      magnitude_x100 / 100U,
-                      magnitude_x100 % 100U,
-                      (phase_x100 < 0) ? "-" : "",
-                      phase_abs_x100 / 100U,
-                      phase_abs_x100 % 100U);
+    len = snprintf(buffer, sizeof(buffer),
+                   "DATA,%lu,%lu.%02lu,%s%lu.%02lu,%s%lu.%02lu,%s%lu.%02lu\r\n",
+                   (unsigned long)freq,
+                   (unsigned long)(mag_x100  / 100U),
+                   (unsigned long)(mag_x100  % 100U),
+                   (phase_x100 < 0) ? "-" : "",
+                   (unsigned long)(phase_abs / 100U),
+                   (unsigned long)(phase_abs % 100U),
+                   (real_x100  < 0) ? "-" : "",
+                   (unsigned long)(real_abs  / 100U),
+                   (unsigned long)(real_abs  % 100U),
+                   (imag_x100  < 0) ? "-" : "",
+                   (unsigned long)(imag_abs  / 100U),
+                   (unsigned long)(imag_abs  % 100U));
 
     if (len > 0 && len < (int)sizeof(buffer))
     {
@@ -170,48 +182,56 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
    =================================================================== */
 void UART_ProcessCommand(void)
 {
-    if (!command_ready) return;
-    command_ready = 0;
+    char cmd_buf[sizeof(rx_buffer)];
 
-    if (strcmp(rx_buffer, "START") == 0)
+    if (!command_ready) return;
+
+    /* Copy rx_buffer under a critical section so the ISR cannot
+       overwrite it while UART_ProcessCommand is comparing it. */
+    __disable_irq();
+    memcpy(cmd_buf, rx_buffer, sizeof(rx_buffer));
+    command_ready = 0;
+    __enable_irq();
+
+    if (strcmp(cmd_buf, "START") == 0)
     {
         Process_Start_Command();
     }
-    else if (strcmp(rx_buffer, "STOP") == 0)
+    else if (strcmp(cmd_buf, "STOP") == 0)
     {
         Process_Stop_Command();
     }
-    else if (strcmp(rx_buffer, "STATUS") == 0)
+    else if (strcmp(cmd_buf, "STATUS") == 0)
     {
         Process_Status_Command();
     }
-    else if (strcmp(rx_buffer, "FLASH_STATUS") == 0)
+    else if (strcmp(cmd_buf, "FLASH_STATUS") == 0)
     {
         Process_FlashStatus_Command();
     }
-    else if (strcmp(rx_buffer, "ERASE_FLASH") == 0)
+    else if (strcmp(cmd_buf, "ERASE_FLASH") == 0)
     {
         Process_EraseFlash_Command();
     }
-    else if (strcmp(rx_buffer, "DUMP_FLASH") == 0)
+    else if (strcmp(cmd_buf, "DUMP_FLASH") == 0)
     {
         Process_DumpFlash_Command();
     }
-    else if (strncmp(rx_buffer, "SET_START_FREQ,", 15) == 0)
+    else if (strncmp(cmd_buf, "SET_START_FREQ,", 15) == 0)
     {
-        Process_SetStartFrequency((uint32_t)strtoul(&rx_buffer[15], NULL, 10));
+        Process_SetStartFrequency((uint32_t)strtoul(&cmd_buf[15], NULL, 10));
     }
-    else if (strncmp(rx_buffer, "SET_STOP_FREQ,", 14) == 0)
+    else if (strncmp(cmd_buf, "SET_STOP_FREQ,", 14) == 0)
     {
-        Process_SetStopFrequency((uint32_t)strtoul(&rx_buffer[14], NULL, 10));
+        Process_SetStopFrequency((uint32_t)strtoul(&cmd_buf[14], NULL, 10));
     }
-    else if (strncmp(rx_buffer, "SET_STEP_FREQ,", 14) == 0)
+    else if (strncmp(cmd_buf, "SET_STEP_FREQ,", 14) == 0)
     {
-        Process_SetStepFrequency((uint32_t)strtoul(&rx_buffer[14], NULL, 10));
+        Process_SetStepFrequency((uint32_t)strtoul(&cmd_buf[14], NULL, 10));
     }
-    else if (strncmp(rx_buffer, "SET_RF,", 7) == 0)
+    else if (strncmp(cmd_buf, "SET_RF,", 7) == 0)
     {
-        Process_SetFeedbackResistor(strtof(&rx_buffer[7], NULL));
+        Process_SetFeedbackResistor(strtof(&cmd_buf[7], NULL));
     }
     else
     {

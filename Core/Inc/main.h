@@ -17,8 +17,6 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f3xx_hal.h"
-#include <stdint.h>
-#include <stdio.h>
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -64,9 +62,9 @@ void Process_SetFeedbackResistor(float value);
 /* Private defines -----------------------------------------------------------*/
 #define AD9833_FSYNC_Pin GPIO_PIN_4
 #define AD9833_FSYNC_GPIO_Port GPIOA
-#define W25Q32_CS_Pin GPIO_PIN_12
+#define W25Q32_CS_Pin GPIO_PIN_13
 #define W25Q32_CS_GPIO_Port GPIOB
-#define STATUS_LED_Pin GPIO_PIN_13
+#define STATUS_LED_Pin GPIO_PIN_12
 #define STATUS_LED_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */

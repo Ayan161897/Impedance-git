@@ -19,7 +19,8 @@ typedef void UART_CommHandleTypeDef;
 /* Public Functions */
 void UART_Comm_Init(UART_CommHandleTypeDef *huart);
 void UART_SendString(const char *str);
-void UART_SendImpedanceData(uint32_t freq, float magnitude, float phase);
+void UART_SendImpedanceData(uint32_t freq, float magnitude, float phase,
+                            float real_part, float imag_part);
 void UART_ProcessCommand(void);
 void UART_RxCpltCallback(UART_CommHandleTypeDef *huart);
 

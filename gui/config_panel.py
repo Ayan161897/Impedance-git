@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QFormLayout, QLineEdit,
     QPushButton, QLabel, QGroupBox
 )
-from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtCore import pyqtSignal, QTimer
 
 
 class ConfigPanel(QWidget):
@@ -91,7 +91,8 @@ class ConfigPanel(QWidget):
             }
             self.settings_applied.emit(settings)
         except ValueError:
-            pass
+            self.apply_btn.setText("Invalid input!")
+            QTimer.singleShot(2000, lambda: self.apply_btn.setText("Apply settings"))
 
     def update_status(self, state, current_freq=None, points_done=None,
                       total_points=None, flash_count=None, flash_cap=None):

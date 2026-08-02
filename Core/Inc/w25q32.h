@@ -28,6 +28,12 @@ extern "C" {
 #define W25Q32_CMD_JEDEC_ID           0x9F
 
 /* =========================================================
+   JEDEC DEVICE ID
+   ========================================================= */
+
+#define W25Q32_JEDEC_ID            0x00EF4016UL  /* Winbond W25Q32JV */
+
+/* =========================================================
    CS PIN
    ========================================================= */
 
@@ -46,7 +52,7 @@ void W25Q32_WriteEnable(void);
 
 uint8_t W25Q32_ReadStatus(void);
 
-void W25Q32_WaitBusy(void);
+uint8_t W25Q32_WaitBusy(uint32_t timeout_ms);
 
 void W25Q32_SectorErase(uint32_t address);
 
