@@ -164,7 +164,9 @@ class VirtualEISDevice:
             # DDS's true quantized output — reproducing this intentionally
             # surfaces the same small measurement error real hardware has.
             result = measure_at_frequency(ref_counts, sig_counts, freq, self.rf)
-            self.emit(protocol.format_data_line(freq, result['magnitude'], result['phase_deg']))
+            self.emit(protocol.format_data_line(
+                freq, result['magnitude'], result['phase_deg'],
+                result['real'], result['imag']))
 
             with self._flash_lock:
                 if len(self.flash) >= FLASH_CAPACITY:

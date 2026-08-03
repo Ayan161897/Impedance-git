@@ -9,6 +9,18 @@ a custom CSV table.
 
 No files under `Core/` or `gui/` are modified by this.
 
+**Hardware reference: PCB5** (`PCB5/Impedance-measurement-3/`).
+The analog front-end model (`circuit_model.py`) reflects the PCB5 schematic:
+OPA4141AID quad op-amp, AD9833BRMZ on a 25 MHz oscillator, W25Q32JVSSIQ
+SPI flash (CS on PB13), ISL21080CIH333Z-TK 3.3 V ADC reference.
+
+**Important — Rf mismatch:** the physical TIA feedback resistor on PCB5 is
+R5\_1Kohms1 = **1 kΩ**. The firmware default and the GUI's "Rf (Ω)" field
+both start at 10 kΩ. When running against real PCB5 hardware, set the GUI's
+Rf field to **1000** before starting a sweep, otherwise all |Z| results will
+be 10× too large. The simulator is internally consistent regardless of the
+Rf value chosen (it uses the same value for synthesis and fitting).
+
 ## One-time setup: virtual COM port pair
 
 The simulator needs a null-modem-style virtual COM port pair so the real

@@ -21,14 +21,31 @@ def format_error(code):
     return f"ERROR,{code}\r\n"
 
 
-def format_data_line(freq_hz, magnitude, phase_deg):
-    """Port of ``UART_SendImpedanceData`` (uart_comm.c:98-133)."""
-    magnitude_x100 = int(magnitude * 100.0 + 0.5)
+def format_data_line(freq_hz, magnitude, phase_deg, real_part, imag_part):
+    """Port of ``UART_SendImpedanceData`` (uart_comm.c:98-145).
+
+    Six-field format: DATA,<freq>,<mag>,<phase>,<real>,<imag>
+    All float fields are encoded as signed fixed-point with two decimal places,
+    matching the firmware's snprintf pattern exactly.
+    """
+    mag_x100   = int(magnitude * 100.0 + 0.5)
     phase_x100 = scale_x100(phase_deg)
-    phase_abs_x100 = abs(phase_x100)
-    sign = "-" if phase_x100 < 0 else ""
-    return (f"DATA,{int(freq_hz)},{magnitude_x100 // 100}.{magnitude_x100 % 100:02d},"
-            f"{sign}{phase_abs_x100 // 100}.{phase_abs_x100 % 100:02d}\r\n")
+    real_x100  = scale_x100(real_part)
+    imag_x100  = scale_x100(imag_part)
+
+    phase_abs = abs(phase_x100)
+    real_abs  = abs(real_x100)
+    imag_abs  = abs(imag_x100)
+
+    ps = "-" if phase_x100 < 0 else ""
+    rs = "-" if real_x100  < 0 else ""
+    is_ = "-" if imag_x100  < 0 else ""
+
+    return (f"DATA,{int(freq_hz)},"
+            f"{mag_x100 // 100}.{mag_x100 % 100:02d},"
+            f"{ps}{phase_abs // 100}.{phase_abs % 100:02d},"
+            f"{rs}{real_abs // 100}.{real_abs % 100:02d},"
+            f"{is_}{imag_abs // 100}.{imag_abs % 100:02d}\r\n")
 
 
 def format_status_line(state, start_freq, stop_freq, step_freq, rf, flash_count):

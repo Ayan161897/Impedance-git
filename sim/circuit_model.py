@@ -2,18 +2,30 @@
 
 This is the configurable "input" side of the simulation: given a DUT
 impedance Z(f), ``synthesize_adc_samples`` builds the same two interleaved
-ADC channels (reference / TIA signal) that the real PCB's analog front end
+ADC channels (reference / TIA signal) that the real PCB5 analog front end
 would present, so ``impedance_model`` (the firmware's own algorithm) can
 recover Z(f) from them exactly as it would on real hardware.
 
-``vexc_peak``/``vbias`` are engineering approximations of the excitation
-amplitude actually reaching the DUT and the analog front end's DC bias —
-the exact OPA2140 gain-network and bias-resistor values weren't recoverable
-as plain text from the KiCad schematic. ``vexc_peak`` defaults to 10 mV,
-matching standard small-signal EIS practice (keeping the electrochemical
-system in its linear regime) and keeping the TIA output in range across a
-wide span of DUT impedances at the RF default of 10 kOhm, rather than being
-pulled from a specific component value.
+PCB5 analog front-end topology (from PCB5/Impedance-measurement-3/netlist_new.xml):
+  - Signal generator: AD9833BRMZ (25 MHz oscillator), VOUT → 200 Ω (R200ohms1)
+      → OPA4141AID op-amp A unity-gain buffer (+IN_A / -IN_A / OUT_A).
+  - Reference channel: OUT_A → Electrode connector pin 2 → PA0 (ADC CH1).
+      ``vexc_peak`` ≈ 0.30 V peak, derived from the AD9833 sine output
+      amplitude on a 3.3 V supply (~0.6 V pp / 2) with no further attenuation.
+  - TIA signal channel: current through DUT → Electrode connector pin 1
+      → R5_1Kohms1 (1 kΩ, feedback resistor) / C11-3.3nF (feedback cap)
+      → OPA4141AID op-amp B inverting TIA output (OUT_B) → PA1 (ADC CH2).
+  - TIA virtual ground: +IN_B biased to VDD/2 = 1.65 V via R15/R16
+      (two 10 kΩ resistors from VREF+ and GND), so the TIA output is
+      centred at 1.65 V (``vbias``).
+  - ADC reference: ISL21080CIH333Z-TK 3.3 V precision reference → VDDA/VREF+.
+  - Supply: 3.3 V (TS2940CZ33 regulator, digital) / 5 V VBUS (OPA4141AID V+).
+
+Note on ``rf`` (TIA feedback resistor): the physical component on PCB5 is
+R5_1Kohms1 = 1 kΩ.  The firmware's ``feedback_resistor`` parameter (set via
+SET_RF from the GUI) should match this value for accurate |Z| recovery.  The
+GUI currently defaults to 10 kΩ, which will scale all magnitude results by 10×
+on real hardware — update the GUI's Rf field to 1000 Ω when using PCB5.
 """
 import cmath
 
@@ -55,18 +67,19 @@ def z_from_table(freq_hz, freqs, res, ims):
     return complex(re, im)
 
 
-def synthesize_adc_samples(freq_hz, z_dut, rf, vexc_peak=0.01, vbias=1.65,
+def synthesize_adc_samples(freq_hz, z_dut, rf, vexc_peak=0.30, vbias=1.65,
                             noise_std_v=0.0005, rng=None):
-    """Builds the 256-sample reference/signal ADC buffers a real TIA front
+    """Builds the 256-sample reference/signal ADC buffers the PCB5 TIA front
     end would produce for a DUT of impedance ``z_dut`` at ``freq_hz``.
 
-    - reference channel: excitation feed-through, used as the phase-0 reference.
-    - signal channel: excitation current through the DUT, converted to a
-      voltage by the transimpedance feedback resistor ``rf``, phase-shifted
-      by angle(Z_dut).
+    - reference channel (PA0, ADC CH1): OPA4141AID unity-gain buffer output,
+      tracks the AD9833 excitation voltage; used as the phase-0 reference.
+    - signal channel (PA1, ADC CH2): OPA4141AID inverting TIA output,
+      converts current through DUT to voltage via ``rf`` (PCB5: 1 kΩ),
+      phase-shifted by angle(Z_dut), centred on ``vbias`` = 1.65 V.
 
-    Adds Gaussian noise and 12-bit quantization/clipping, matching the real
-    ADC1 configuration (3.3V, 0-4095 counts, impedance.c:120-121).
+    Adds Gaussian noise and 12-bit quantisation/clipping, matching ADC1
+    configuration: VREF+ = 3.3 V, 0–4095 counts (impedance.c:120-121).
     """
     if rng is None:
         rng = np.random.default_rng()
