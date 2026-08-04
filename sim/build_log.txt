@@ -1,0 +1,172 @@
+﻿pyinstaller.exe : 516 INFO: PyInstaller: 6.21.0, contrib hooks: 2026.6
+At line:3 char:1
++ & $pyinstaller eis_emulator.spec 2>&1 | Out-File -Encoding utf8 "buil ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (516 INFO: PyIns...b hooks: 2026.6:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+517 INFO: Python: 3.14.5
+590 INFO: Platform: Windows-11-10.0.26200-SP0
+590 INFO: Python environment: C:\Users\ehsan\AppData\Local\Python\pythoncore-3.14-64
+604 INFO: Module search paths (PYTHONPATH):
+['C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Scripts\\pyinstaller.exe',
+ 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\python314.zip',
+ 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\DLLs',
+ 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib',
+ 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64',
+ 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages',
+ 'C:\\Users\\ehsan\\.stm32cubemx\\Impedance-measurement-git\\Impedance-measurement-git\\sim',
+ 'C:\\Users\\ehsan\\.stm32cubemx\\Impedance-measurement-git\\Impedance-measurement-git\\gui']
+2042 INFO: Appending 'datas' from .spec
+2042 INFO: checking Analysis
+2042 INFO: Building Analysis because Analysis-00.toc is non existent
+2042 INFO: Looking for Python shared library...
+2042 INFO: Using Python shared library: C:\Users\ehsan\AppData\Local\Python\pythoncore-3.14-64\python314.dll
+2042 INFO: Running Analysis Analysis-00.toc
+2042 INFO: Target bytecode optimization level: 0
+2042 INFO: Initializing module dependency graph...
+2048 INFO: Initializing module graph hook caches...
+2092 INFO: Analyzing modules for base_library.zip ...
+7461 INFO: Processing standard module hook 'hook-encodings.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+8784 INFO: Processing standard module hook 'hook-pickle.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+9242 INFO: Processing standard module hook 'hook-math.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+9500 INFO: Processing standard module hook 'hook-difflib.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+9533 INFO: Processing standard module hook 'hook-heapq.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+15003 INFO: Caching module dependency graph...
+15068 INFO: Analyzing 
+C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measurement-git\sim\run_simulator.py
+15255 INFO: Processing standard module hook 'hook-numpy.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+16266 INFO: Processing pre-safe-import-module hook 'hook-typing_extensions.py' from 'C:\\Users\\ehsan\\AppData\\Local\\
+Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+16270 INFO: SetuptoolsInfo: initializing cached setuptools info...
+18729 INFO: Processing standard module hook 'hook-multiprocessing.util.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+18952 INFO: Processing standard module hook 'hook-xml.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+19585 INFO: Processing standard module hook 'hook-sysconfig.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+19599 INFO: Processing standard module hook 'hook-_ctypes.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+21397 INFO: Processing standard module hook 'hook-platform.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+22111 INFO: Processing standard module hook 'hook-webbrowser.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+26308 INFO: Processing standard module hook 'hook-charset_normalizer.py' from 'C:\\Users\\ehsan\\AppData\\Local\\Python
+\\pythoncore-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+27392 INFO: Processing standard module hook 'hook-matplotlib.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+28737 INFO: Processing pre-safe-import-module hook 'hook-packaging.py' from 'C:\\Users\\ehsan\\AppData\\Local\\Python\\
+pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+29735 INFO: Processing standard module hook 'hook-matplotlib.backend_bases.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+30129 INFO: Processing standard module hook 'hook-PIL.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+30385 INFO: Processing standard module hook 'hook-PIL.Image.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+31307 INFO: Processing standard module hook 'hook-xml.etree.cElementTree.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+31517 INFO: Processing standard module hook 'hook-xml.dom.domreg.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+33322 INFO: Processing standard module hook 'hook-PIL.ImageFilter.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+35810 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+36099 INFO: Processing standard module hook 'hook-matplotlib.pyplot.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+38948 INFO: Processing standard module hook 'hook-dateutil.py' from 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythonco
+re-3.14-64\\Lib\\site-packages\\_pyinstaller_hooks_contrib\\stdhooks'
+39254 INFO: Processing pre-safe-import-module hook 'hook-six.moves.py' from 'C:\\Users\\ehsan\\AppData\\Local\\Python\\
+pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+45444 INFO: Processing pre-safe-import-module hook 'hook-gi.py' from 'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythonc
+ore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_safe_import_module'
+45496 INFO: Processing standard module hook 'hook-matplotlib.backends.backend_qtagg.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+45515 INFO: Processing standard module hook 'hook-matplotlib.backends.qt_compat.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+46493 INFO: hook-matplotlib.backends.qt_compat: selected 'PyQt5' as the only available Qt bindings.
+46510 INFO: Processing standard module hook 'hook-PyQt5.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+49024 INFO: Processing standard module hook 'hook-PyQt5.QtCore.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+55887 INFO: Processing standard module hook 'hook-PyQt5.QtWidgets.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+65083 INFO: Processing standard module hook 'hook-PyQt5.QtGui.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+119602 INFO: Processing standard module hook 'hook-PyQt5.QtSvg.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+121623 INFO: Analyzing hidden import 'serial_worker'
+122808 INFO: Processing module hooks (post-graph stage)...
+122903 INFO: Processing standard module hook 'hook-matplotlib.backends.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+122917 INFO: Matplotlib backend selection method: automatic discovery of used backends
+124827 INFO: Trying determine the default backend as first importable candidate from the list: ['QtAgg', 'Qt5Agg', 
+'Gtk4Agg', 'Gtk3Agg', 'TkAgg', 'WxAgg']
+128420 INFO: Selected matplotlib backends: ['QtAgg']
+134387 INFO: Processing standard module hook 'hook-PIL.SpiderImagePlugin.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+135099 INFO: Performing binary vs. data reclassification (305 entries)
+143510 INFO: Looking for ctypes DLLs
+143650 WARNING: Ignoring /System/Library/Frameworks/IOKit.framework/IOKit imported from 
+C:\Users\ehsan\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\serial\tools\list_ports_osx.py - only 
+basenames are supported with ctypes imports!
+143653 WARNING: Ignoring /System/Library/Frameworks/CoreFoundation.framework/CoreFoundation imported from 
+C:\Users\ehsan\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\serial\tools\list_ports_osx.py - only 
+basenames are supported with ctypes imports!
+143813 INFO: Analyzing run-time hooks ...
+143820 INFO: Including run-time hook 'pyi_rth_pyqt5.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+143828 INFO: Processing pre-find-module-path hook 'hook-_pyi_rth_utils.py' from 'C:\\Users\\ehsan\\AppData\\Local\\Pyth
+on\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\pre_find_module_path'
+143838 INFO: Processing standard module hook 'hook-_pyi_rth_utils.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks'
+143853 INFO: Including run-time hook 'pyi_rth_pkgutil.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+143866 INFO: Including run-time hook 'pyi_rth_inspect.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+143877 INFO: Including run-time hook 'pyi_rth_multiprocessing.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+143888 INFO: Including run-time hook 'pyi_rth_mplconfig.py' from 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyInstaller\\hooks\\rthooks'
+143986 INFO: Creating base_library.zip...
+144042 INFO: Looking for dynamic libraries
+149612 INFO: Extra DLL search directories (AddDllDirectory): 
+['C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyQt5\\Qt5\\bin', 
+'C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\numpy.libs']
+149612 INFO: Extra DLL search directories (PATH): 
+['C:\\Users\\ehsan\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PyQt5\\Qt5\\bin']
+154343 INFO: Warnings written to C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measurement-git\sim\bu
+ild\eis_emulator\warn-eis_emulator.txt
+154462 INFO: Graph cross-reference written to C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measureme
+nt-git\sim\build\eis_emulator\xref-eis_emulator.html
+154561 INFO: checking PYZ
+154563 INFO: Building PYZ because PYZ-00.toc is non existent
+154563 INFO: Building PYZ (ZlibArchive) 
+C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measurement-git\sim\build\eis_emulator\PYZ-00.pyz
+156023 INFO: Building PYZ (ZlibArchive) 
+C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measurement-git\sim\build\eis_emulator\PYZ-00.pyz 
+completed successfully.
+156091 INFO: checking PKG
+156092 INFO: Building PKG because PKG-00.toc is non existent
+156092 INFO: Building PKG (CArchive) EIS_Emulator.pkg
+168744 INFO: Building PKG (CArchive) EIS_Emulator.pkg completed successfully.
+168760 INFO: Bootloader C:\Users\ehsan\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\PyInstaller\bootloader
+\Windows-64bit-intel\runw.exe
+168760 INFO: checking EXE
+168761 INFO: Building EXE because EXE-00.toc is non existent
+168761 INFO: Building EXE from EXE-00.toc
+168762 INFO: Copying bootloader EXE to 
+C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measurement-git\sim\dist\EIS_Emulator.exe
+169045 INFO: Copying icon to EXE
+169151 INFO: Copying 0 resources to EXE
+169152 INFO: Embedding manifest in EXE
+169242 INFO: Appending PKG archive to EXE
+169494 INFO: Fixing EXE headers
+170423 INFO: Building EXE from EXE-00.toc completed successfully.
+170439 INFO: Build complete! The results are available in: 
+C:\Users\ehsan\.stm32cubemx\Impedance-measurement-git\Impedance-measurement-git\sim\dist
