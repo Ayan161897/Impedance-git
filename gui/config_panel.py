@@ -1,8 +1,17 @@
 from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QFormLayout, QLineEdit,
-    QPushButton, QLabel, QGroupBox
+    QPushButton, QLabel, QGroupBox, QMessageBox
 )
 from PyQt5.QtCore import pyqtSignal, QTimer
+
+# AD9833 DDS output limit = half its 25 MHz clock (Core/Inc/ad9833.h AD9833_MCLK).
+# Firmware rejects SET_START_FREQ/SET_STOP_FREQ above this (Core/Src/main.c).
+AD9833_MAX_FREQ_HZ = 12_500_000
+
+# Range where the fixed 256-sample acquisition window and ~486.5 kHz effective
+# ADC sample rate (Core/Inc/impedance.h) give a reliable sine/cosine fit.
+RECOMMENDED_MIN_FREQ_HZ = 5_000
+RECOMMENDED_MAX_FREQ_HZ = 100_000
 
 
 class ConfigPanel(QWidget):
@@ -83,16 +92,58 @@ class ConfigPanel(QWidget):
 
     def _on_apply(self):
         try:
-            settings = {
-                'start_freq': int(self.start_freq.text()),
-                'stop_freq':  int(self.stop_freq.text()),
-                'step_freq':  int(self.step_freq.text()),
-                'rf':         float(self.rf_value.text()),
-            }
-            self.settings_applied.emit(settings)
+            start = int(self.start_freq.text())
+            stop  = int(self.stop_freq.text())
+            step  = int(self.step_freq.text())
+            rf    = float(self.rf_value.text())
         except ValueError:
             self.apply_btn.setText("Invalid input!")
             QTimer.singleShot(2000, lambda: self.apply_btn.setText("Apply settings"))
+            return
+
+        if start <= 0 or stop <= 0 or step <= 0 or rf <= 0:
+            QMessageBox.critical(
+                self, "Invalid settings",
+                "Start freq, stop freq, step freq, and Rf must all be greater than 0."
+            )
+            return
+        if stop < start:
+            QMessageBox.critical(
+                self, "Invalid settings",
+                "Stop frequency must be greater than or equal to start frequency."
+            )
+            return
+        if start > AD9833_MAX_FREQ_HZ or stop > AD9833_MAX_FREQ_HZ:
+            QMessageBox.critical(
+                self, "Invalid settings",
+                f"Start and stop frequency must not exceed {AD9833_MAX_FREQ_HZ:,} Hz "
+                "(AD9833 DDS output limit — half its 25 MHz clock). The firmware will "
+                "reject anything above this."
+            )
+            return
+
+        if start < RECOMMENDED_MIN_FREQ_HZ or stop > RECOMMENDED_MAX_FREQ_HZ:
+            choice = QMessageBox.warning(
+                self, "Frequency outside recommended range",
+                "Measurement accuracy is only validated in roughly "
+                f"{RECOMMENDED_MIN_FREQ_HZ:,}–{RECOMMENDED_MAX_FREQ_HZ:,} Hz.\n\n"
+                "Below ~5 kHz, the fixed 256-sample acquisition window captures too few "
+                "cycles of the excitation tone and the sine/cosine fit error can exceed "
+                "100%. Above ~100 kHz, there are too few ADC samples per cycle "
+                "(~486.5 kHz effective sample rate) for a reliable fit.\n\n"
+                "Apply these settings anyway?",
+                QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            )
+            if choice != QMessageBox.Yes:
+                return
+
+        settings = {
+            'start_freq': start,
+            'stop_freq':  stop,
+            'step_freq':  step,
+            'rf':         rf,
+        }
+        self.settings_applied.emit(settings)
 
     def update_status(self, state, current_freq=None, points_done=None,
                       total_points=None, flash_count=None, flash_cap=None):
