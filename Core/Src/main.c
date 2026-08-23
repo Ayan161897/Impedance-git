@@ -55,7 +55,7 @@ volatile uint8_t measurement_running = 0;
 static uint32_t sweep_start_frequency = SWEEP_START_FREQUENCY;
 static uint32_t sweep_stop_frequency = SWEEP_STOP_FREQUENCY;
 static uint32_t sweep_step_frequency = SWEEP_STEP_FREQUENCY;
-static float feedback_resistor = 10000.0f;
+static float feedback_resistor = 1000.0f;  /* PCB5 R5 — reported in STATUS only */
 
 /* USER CODE END PV */
 
@@ -77,7 +77,7 @@ static void Send_Status(void)
 {
     uint32_t rf_x100 = (uint32_t)((feedback_resistor * 100.0f) + 0.5f);
 
-    printf("STATUS,%s,START=%lu,STOP=%lu,STEP=%lu,RF=%lu.%02lu,FLASH_COUNT=%lu\r\n",
+    printf("STATUS,%s,START=%lu,STOP=%lu,STEP=%lu,RF=%lu.%02lu,CF_NF=3.30,FLASH_COUNT=%lu\r\n",
            measurement_running ? "RUNNING" : "IDLE",
            sweep_start_frequency,
            sweep_stop_frequency,
@@ -150,6 +150,11 @@ int __io_putchar(int ch)
 
 void Process_Start_Command(void)
 {
+    if(measurement_running)
+    {
+        UART_SendString("ERROR,BUSY\r\n");
+        return;
+    }
     if(!Sweep_Config_IsValid())
     {
         UART_SendString("ERROR,BAD_CONFIG\r\n");
@@ -273,14 +278,26 @@ void Process_SetStepFrequency(uint32_t value)
 
 void Process_SetFeedbackResistor(float value)
 {
-    if(measurement_running || value <= 0.0f)
+    (void)value;
+    UART_SendString("ERROR,FIXED_TIA,RF=1000.00,CF_NF=3.30\r\n");
+}
+
+void Process_SetSweepConfig(uint32_t start, uint32_t stop, uint32_t step)
+{
+    if(measurement_running)
+    {
+        UART_SendString("ERROR,BUSY\r\n");
+        return;
+    }
+    if(start == 0U || step == 0U || stop < start || stop > (AD9833_MCLK / 2UL))
     {
         UART_SendString("ERROR,BAD_VALUE\r\n");
         return;
     }
-
-    feedback_resistor = value;
-    UART_SendString("OK SET_RF\r\n");
+    sweep_start_frequency = start;
+    sweep_stop_frequency  = stop;
+    sweep_step_frequency  = step;
+    UART_SendString("OK SET_SWEEP\r\n");
 }
 
 /* USER CODE END 0 */
@@ -376,6 +393,75 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    UART_ProcessCommand();
+
+    if(measurement_running)
+    {
+        BodePoint result;
+
+        UART_SendString("SWEEP,BEGIN\r\n");
+
+        uint32_t freq = sweep_start_frequency;
+        while(1)
+        {
+            UART_ProcessCommand();
+
+            if(!measurement_running)
+            {
+                break;
+            }
+
+            AD9833_SetFrequency(freq);
+
+            Delay_With_Command_Processing(20);
+
+            if(!measurement_running)
+            {
+                break;
+            }
+
+            result = Imp_MeasureAtFrequency(freq);
+
+            UART_SendImpedanceData(freq,
+                                   result.magnitude,
+                                   result.phaseDeg,
+                                   result.realPart,
+                                   result.imagPart);
+
+            FlashLogStatus flash_status =
+                    FlashLog_WritePoint(freq, &result);
+
+            if(flash_status == FLASH_LOG_FULL)
+            {
+                UART_SendString("ERROR,FLASH_FULL\r\n");
+            }
+            else if(flash_status != FLASH_LOG_OK)
+            {
+                UART_SendString("ERROR,FLASH_WRITE\r\n");
+            }
+
+            if(freq >= sweep_stop_frequency)
+            {
+                break;
+            }
+
+            /* Overflow-safe increment: clamp to stop if next step overshoots */
+            if(freq > sweep_stop_frequency - sweep_step_frequency)
+            {
+                freq = sweep_stop_frequency;
+            }
+            else
+            {
+                freq += sweep_step_frequency;
+            }
+
+            Delay_With_Command_Processing(SWEEP_DELAY_MS);
+        }
+
+        measurement_running = 0;
+        UART_SendString("SWEEP,DONE\r\n");
+        Send_Status();
+    }
   }
   /* USER CODE END 3 */
 }
@@ -458,7 +544,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 2;
-  hadc1.Init.DMAContinuousRequests = ENABLE;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_OVERWRITTEN;
@@ -616,9 +702,6 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(W25Q32_CS_GPIO_Port, W25Q32_CS_Pin, GPIO_PIN_SET);
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(STATUS_LED_GPIO_Port, STATUS_LED_Pin, GPIO_PIN_RESET);
-
   /*Configure GPIO pin : AD9833_FSYNC_Pin */
   GPIO_InitStruct.Pin = AD9833_FSYNC_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -638,13 +721,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(W25Q32_CS_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : STATUS_LED_Pin */
-  GPIO_InitStruct.Pin = STATUS_LED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(STATUS_LED_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
 

@@ -10,6 +10,10 @@
 
 #define SAMPLE_COUNT 256
 
+/* PCB5 TIA feedback network — R5 ∥ C11 (hardware values, cannot be changed) */
+#define TIA_RF_OHM  1000.0f     /* R5: feedback resistor */
+#define TIA_CF_F    3.3e-9f     /* C11: feedback capacitor in parallel with R5 */
+
 /*
  * ADC1 runs from a 72 MHz async clock. Each channel uses 61.5 sample
  * cycles plus 12.5 conversion cycles, and the scan sequence has two
@@ -65,8 +69,7 @@ void Process_Impedance(float frequency);
 
 /* Measure impedance at one frequency */
 
-BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
-                                 float Rf);
+BodePoint Imp_MeasureAtFrequency(uint32_t freqHz);
 
 /* Get calculated phase */
 

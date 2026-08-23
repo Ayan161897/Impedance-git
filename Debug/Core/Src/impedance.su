@@ -1,6 +1,7 @@
-../Core/Src/impedance.c:41:21:Estimate_Tone	96	static
-../Core/Src/impedance.c:107:6:Imp_Init	8	static
-../Core/Src/impedance.c:117:6:Process_Impedance	56	static
-../Core/Src/impedance.c:191:11:Imp_MeasureAtFrequency	88	static
-../Core/Src/impedance.c:233:7:Imp_GetPhase	4	static
-../Core/Src/impedance.c:242:7:Imp_GetMagnitude	4	static
+../Core/Src/impedance.c:37:6:HAL_ADC_ConvCpltCallback	16	static
+../Core/Src/impedance.c:51:21:Estimate_Tone	96	static
+../Core/Src/impedance.c:120:6:Imp_Init	8	static
+../Core/Src/impedance.c:130:6:Process_Impedance	64	static
+../Core/Src/impedance.c:215:11:Imp_MeasureAtFrequency	104	static
+../Core/Src/impedance.c:264:7:Imp_GetPhase	4	static
+../Core/Src/impedance.c:273:7:Imp_GetMagnitude	4	static

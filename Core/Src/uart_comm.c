@@ -56,6 +56,11 @@ __weak void Process_SetFeedbackResistor(float value)
     (void)value;
 }
 
+__weak void Process_SetSweepConfig(uint32_t start, uint32_t stop, uint32_t step)
+{
+    (void)start; (void)stop; (void)step;
+}
+
 static UART_CommHandleTypeDef *uart_handle = NULL;
 
 static uint8_t rx_char;
@@ -232,6 +237,15 @@ void UART_ProcessCommand(void)
     else if (strncmp(cmd_buf, "SET_RF,", 7) == 0)
     {
         Process_SetFeedbackResistor(strtof(&cmd_buf[7], NULL));
+    }
+    else if (strncmp(cmd_buf, "SET_SWEEP,", 10) == 0)
+    {
+        char *p = &cmd_buf[10];
+        char *end;
+        uint32_t start = (uint32_t)strtoul(p,   &end, 10); if(*end == ',') end++;
+        uint32_t stop  = (uint32_t)strtoul(end,  &end, 10); if(*end == ',') end++;
+        uint32_t step  = (uint32_t)strtoul(end,  NULL, 10);
+        Process_SetSweepConfig(start, stop, step);
     }
     else
     {

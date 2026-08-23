@@ -32,6 +32,16 @@ static float realPart = 0.0f;
 
 static float imagPart = 0.0f;
 
+volatile uint8_t adc_dma_done = 0;
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef *hadc)
+{
+    if(hadc->Instance == ADC1)
+    {
+        adc_dma_done = 1;
+    }
+}
+
 typedef struct
 {
     float magnitude;
@@ -94,8 +104,11 @@ static ToneEstimate Estimate_Tone(const float *samples, float frequency, float t
         sqrtf((cosCoeff * cosCoeff) +
               (sinCoeff * sinCoeff));
 
+    /* Model: x = cosCoeff*cos(ωt) + sinCoeff*sin(ωt)
+       where cosCoeff = A*cos(φ), sinCoeff = -A*sin(φ).
+       Therefore φ = atan2(-sinCoeff, cosCoeff). */
     estimate.phaseRad =
-        atan2f(sinCoeff, cosCoeff);
+        atan2f(-sinCoeff, cosCoeff);
 
     return estimate;
 }
@@ -124,11 +137,22 @@ void Process_Impedance(float frequency)
     const float ADC_VREF = 3.3f;
     const float ADC_MAX  = 4095.0f;
 
+    adc_dma_done = 0;
+
     HAL_ADC_Start_DMA(&hadc1,
                       (uint32_t*)adc_buffer,
                       2 * SAMPLE_COUNT);
 
-    HAL_Delay(20);
+    /* Wait for exactly 2*SAMPLE_COUNT conversions to complete (one-shot DMA).
+       At ~486.5 kHz effective rate this takes ~0.53 ms; 10 ms is a safe timeout. */
+    uint32_t t_start = HAL_GetTick();
+    while(!adc_dma_done)
+    {
+        if((HAL_GetTick() - t_start) >= 10U)
+        {
+            break;
+        }
+    }
 
     HAL_ADC_Stop_DMA(&hadc1);
 
@@ -188,39 +212,46 @@ void Process_Impedance(float frequency)
    COMPLETE IMPEDANCE MEASUREMENT
    ========================================================= */
 
-BodePoint Imp_MeasureAtFrequency(uint32_t freqHz,
-                                 float Rf)
+BodePoint Imp_MeasureAtFrequency(uint32_t freqHz)
 {
     BodePoint p;
 
     Process_Impedance((float)freqHz);
 
-    float phaseRad = phaseDeg * ((float)M_PI / 180.0f);
-
     /*
-       magnitude = voltage magnitude from TIA output.
-       referenceMagnitude = measured excitation/reference voltage.
-       TIA relation: Vout = I * Rf
-       Therefore: I = Vout / Rf
-       Impedance: Z = Vin / I
+       PCB5 TIA feedback network: R5 (TIA_RF_OHM) in parallel with C11 (TIA_CF_F).
+       Complex feedback impedance:
+           Zf = TIA_RF_OHM / (1 + j*omega*TIA_RF_OHM*TIA_CF_F)
+
+       TIA input-output relationship (inverting amplifier):
+           Vsig = -IDUT * Zf   =>   ZDUT = -Zf * (Vref / Vsig)
+
+       In magnitude/phase form:
+           |ZDUT| = |Zf| * (|Vref| / |Vsig|)
+           ∠ZDUT = ∠Zf - measured_phase + 180°   (180° from TIA inversion)
     */
 
-    float current_peak = magnitude / Rf;
+    float omega    = 2.0f * (float)M_PI * (float)freqHz;
+    float rc       = omega * TIA_RF_OHM * TIA_CF_F;
+    float zf_mag   = TIA_RF_OHM / sqrtf(1.0f + rc * rc);
+    float zf_phase_deg = -atanf(rc) * (180.0f / (float)M_PI);
 
-    if((current_peak > 0.000001f) &&
-       (referenceMagnitude > 0.000001f))
+    if((magnitude > 0.000001f) && (referenceMagnitude > 0.000001f))
     {
-        p.magnitude = referenceMagnitude / current_peak;
+        p.magnitude = zf_mag * (referenceMagnitude / magnitude);
     }
     else
     {
         p.magnitude = 999999.0f;
     }
 
-    p.phaseDeg = phaseDeg;
+    p.phaseDeg = zf_phase_deg - phaseDeg + 180.0f;
 
+    while(p.phaseDeg >  180.0f) p.phaseDeg -= 360.0f;
+    while(p.phaseDeg < -180.0f) p.phaseDeg += 360.0f;
+
+    float phaseRad = p.phaseDeg * ((float)M_PI / 180.0f);
     p.realPart = p.magnitude * cosf(phaseRad);
-
     p.imagPart = p.magnitude * sinf(phaseRad);
 
     return p;

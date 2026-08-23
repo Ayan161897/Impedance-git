@@ -1,6 +1,7 @@
-../Core/Src/impedance.c:41:21:Estimate_Tone	3
-../Core/Src/impedance.c:107:6:Imp_Init	1
-../Core/Src/impedance.c:117:6:Process_Impedance	5
-../Core/Src/impedance.c:191:11:Imp_MeasureAtFrequency	3
-../Core/Src/impedance.c:233:7:Imp_GetPhase	1
-../Core/Src/impedance.c:242:7:Imp_GetMagnitude	1
+../Core/Src/impedance.c:37:6:HAL_ADC_ConvCpltCallback	2
+../Core/Src/impedance.c:51:21:Estimate_Tone	3
+../Core/Src/impedance.c:120:6:Imp_Init	1
+../Core/Src/impedance.c:130:6:Process_Impedance	7
+../Core/Src/impedance.c:215:11:Imp_MeasureAtFrequency	5
+../Core/Src/impedance.c:264:7:Imp_GetPhase	1
+../Core/Src/impedance.c:273:7:Imp_GetMagnitude	1

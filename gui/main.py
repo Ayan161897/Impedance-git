@@ -195,6 +195,9 @@ class MainWindow(QMainWindow):
                     self.erase_flash_btn]:
             btn.setEnabled(True)
         self._log("Connected to " + port, "system")
+        # Sync GUI state with firmware immediately after connection
+        self._send("STATUS")
+        self._send("FLASH_STATUS")
 
     def _on_serial_disconnected(self):
         self._connected = False
@@ -214,10 +217,13 @@ class MainWindow(QMainWindow):
 
     def _on_sweep_timeout(self):
         if self._sweep_running:
+            self._send("STOP")
             self._sweep_running = False
             self.stop_btn.setEnabled(False)
+            self.start_btn.setEnabled(True)
+            self.config_panel.set_controls_locked(False)
             self.config_panel.update_status("IDLE")
-            self._log("WARNING: No data received for 5 s — sweep timed out", "error")
+            self._log("WARNING: No data received for 5 s — sweep timed out, STOP sent", "error")
 
     # ---------------------------------------------------------- commands --
 
@@ -226,10 +232,14 @@ class MainWindow(QMainWindow):
         self._log("→ " + cmd, "tx")
 
     def _on_start(self):
+        if self._sweep_running:
+            return
         self.data.clear()
         self.plot_widget.clear_plots()
         self._points_done = 0
         self._compute_total_points()
+        self.start_btn.setEnabled(False)
+        self.config_panel.set_controls_locked(True)
         self._send("START")
 
     def _on_erase_flash(self):
@@ -242,10 +252,7 @@ class MainWindow(QMainWindow):
             self._send("ERASE_FLASH")
 
     def _on_settings_applied(self, s):
-        self._send(f"SET_START_FREQ,{s['start_freq']}")
-        self._send(f"SET_STOP_FREQ,{s['stop_freq']}")
-        self._send(f"SET_STEP_FREQ,{s['step_freq']}")
-        self._send(f"SET_RF,{s['rf']:.1f}")
+        self._send(f"SET_SWEEP,{s['start_freq']},{s['stop_freq']},{s['step_freq']}")
 
     def _on_export_csv(self):
         path, _ = QFileDialog.getSaveFileName(
@@ -283,13 +290,17 @@ class MainWindow(QMainWindow):
             self._log("← " + line, "rx")
         elif line.startswith("SWEEP,BEGIN"):
             self._sweep_running = True
+            self.start_btn.setEnabled(False)
             self.stop_btn.setEnabled(True)
+            self.config_panel.set_controls_locked(True)
             self._sweep_watchdog.start()
             self.config_panel.update_status("RUNNING")
             self._log("← " + line, "rx")
         elif line.startswith("SWEEP,DONE"):
             self._sweep_running = False
+            self.start_btn.setEnabled(True)
             self.stop_btn.setEnabled(False)
+            self.config_panel.set_controls_locked(False)
             self._sweep_watchdog.stop()
             self.config_panel.update_status(
                 "IDLE",
@@ -306,6 +317,13 @@ class MainWindow(QMainWindow):
             self._log("← " + line, "rx")
         elif line.startswith("ERROR"):
             self._log("← " + line, "error")
+            if self._sweep_running:
+                self._sweep_running = False
+                self._sweep_watchdog.stop()
+                self.start_btn.setEnabled(True)
+                self.stop_btn.setEnabled(False)
+                self.config_panel.set_controls_locked(False)
+                self.config_panel.update_status("IDLE")
         else:
             self._log("← " + line, "rx")
 
@@ -363,12 +381,22 @@ class MainWindow(QMainWindow):
                 pass
 
     def _parse_status(self, line):
-        # STATUS,IDLE/RUNNING,START=...,STOP=...,STEP=...,RF=...,FLASH_COUNT=...
+        # STATUS,IDLE/RUNNING,START=...,STOP=...,STEP=...,RF=...,CF_NF=...,FLASH_COUNT=...
         m_state = re.search(r'STATUS,(IDLE|RUNNING)', line)
+        m_start = re.search(r'START=(\d+)', line)
+        m_stop  = re.search(r'STOP=(\d+)',  line)
+        m_step  = re.search(r'STEP=(\d+)',  line)
         m_flash = re.search(r'FLASH_COUNT=(\d+)', line)
 
         state = m_state.group(1) if m_state else "IDLE"
         flash_count = int(m_flash.group(1)) if m_flash else None
+
+        if m_start and m_stop and m_step:
+            self.config_panel.sync_from_status(
+                int(m_start.group(1)),
+                int(m_stop.group(1)),
+                int(m_step.group(1))
+            )
 
         self.config_panel.update_status(state, flash_count=flash_count)
         if flash_count is not None:
@@ -380,7 +408,8 @@ class MainWindow(QMainWindow):
         m_cap   = re.search(r'CAPACITY=(\d+)', line)
         count = int(m_count.group(1)) if m_count else 0
         cap   = int(m_cap.group(1))   if m_cap   else 0
-        self.config_panel.update_status("IDLE", flash_count=count, flash_cap=cap)
+        state = "RUNNING" if self._sweep_running else "IDLE"
+        self.config_panel.update_status(state, flash_count=count, flash_cap=cap)
         self.lbl_flash_sb.setText(f"Flash: {count} / {cap} records")
 
     def _compute_total_points(self):

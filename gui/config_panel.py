@@ -31,15 +31,13 @@ class ConfigPanel(QWidget):
         sweep_form = QFormLayout()
         sweep_form.setSpacing(5)
 
-        self.start_freq = QLineEdit("1000")
+        self.start_freq = QLineEdit("5000")
         self.stop_freq  = QLineEdit("100000")
         self.step_freq  = QLineEdit("1000")
-        self.rf_value   = QLineEdit("10000")
 
         sweep_form.addRow("Start freq (Hz):", self.start_freq)
         sweep_form.addRow("Stop freq (Hz):",  self.stop_freq)
         sweep_form.addRow("Step freq (Hz):",  self.step_freq)
-        sweep_form.addRow("Rf (Ω):",          self.rf_value)
 
         self.apply_btn = QPushButton("Apply settings")
         self.apply_btn.clicked.connect(self._on_apply)
@@ -47,6 +45,22 @@ class ConfigPanel(QWidget):
 
         sweep_group.setLayout(sweep_form)
         layout.addWidget(sweep_group)
+
+        # --- PCB5 Hardware (fixed values) ---
+        hw_group = QGroupBox("PCB5 Hardware")
+        hw_form = QFormLayout()
+        hw_form.setSpacing(4)
+
+        lbl_rf = QLabel("1 kΩ  (R5, fixed)")
+        lbl_rf.setStyleSheet("color: grey;")
+        lbl_cf = QLabel("3.3 nF  (C11, fixed)")
+        lbl_cf.setStyleSheet("color: grey;")
+
+        hw_form.addRow("TIA feedback R:", lbl_rf)
+        hw_form.addRow("TIA feedback C:", lbl_cf)
+
+        hw_group.setLayout(hw_form)
+        layout.addWidget(hw_group)
 
         # --- Live status ---
         status_group = QGroupBox("Live status")
@@ -95,16 +109,15 @@ class ConfigPanel(QWidget):
             start = int(self.start_freq.text())
             stop  = int(self.stop_freq.text())
             step  = int(self.step_freq.text())
-            rf    = float(self.rf_value.text())
         except ValueError:
             self.apply_btn.setText("Invalid input!")
             QTimer.singleShot(2000, lambda: self.apply_btn.setText("Apply settings"))
             return
 
-        if start <= 0 or stop <= 0 or step <= 0 or rf <= 0:
+        if start <= 0 or stop <= 0 or step <= 0:
             QMessageBox.critical(
                 self, "Invalid settings",
-                "Start freq, stop freq, step freq, and Rf must all be greater than 0."
+                "Start freq, stop freq, and step freq must all be greater than 0."
             )
             return
         if stop < start:
@@ -141,9 +154,21 @@ class ConfigPanel(QWidget):
             'start_freq': start,
             'stop_freq':  stop,
             'step_freq':  step,
-            'rf':         rf,
         }
         self.settings_applied.emit(settings)
+
+    def sync_from_status(self, start, stop, step):
+        """Update sweep fields to match values reported by firmware STATUS."""
+        self.start_freq.setText(str(start))
+        self.stop_freq.setText(str(stop))
+        self.step_freq.setText(str(step))
+
+    def set_controls_locked(self, locked):
+        """Disable/enable sweep config controls during an active sweep."""
+        self.start_freq.setEnabled(not locked)
+        self.stop_freq.setEnabled(not locked)
+        self.step_freq.setEnabled(not locked)
+        self.apply_btn.setEnabled(not locked)
 
     def update_status(self, state, current_freq=None, points_done=None,
                       total_points=None, flash_count=None, flash_cap=None):

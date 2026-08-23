@@ -37,7 +37,7 @@ extern "C" {
    CS PIN
    ========================================================= */
 
-#define W25Q32_CS_Pin              GPIO_PIN_12
+#define W25Q32_CS_Pin              GPIO_PIN_13   /* PB13 — verified from PCB5 schematic net M-PB13 */
 #define W25Q32_CS_GPIO_Port        GPIOB
 
 /* =========================================================

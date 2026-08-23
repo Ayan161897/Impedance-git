@@ -8,9 +8,10 @@
 ../Core/Src/uart_comm.c:44:13:Process_SetStopFrequency	16	static
 ../Core/Src/uart_comm.c:49:13:Process_SetStepFrequency	16	static
 ../Core/Src/uart_comm.c:54:13:Process_SetFeedbackResistor	16	static
-../Core/Src/uart_comm.c:71:6:UART_Comm_Init	16	static
-../Core/Src/uart_comm.c:85:6:UART_SendString	24	static
-../Core/Src/uart_comm.c:98:6:UART_SendImpedanceData	336	static
-../Core/Src/uart_comm.c:151:6:UART_RxCpltCallback	16	static
-../Core/Src/uart_comm.c:174:6:HAL_UART_RxCpltCallback	16	static
-../Core/Src/uart_comm.c:183:6:UART_ProcessCommand	136	static,ignoring_inline_asm
+../Core/Src/uart_comm.c:59:13:Process_SetSweepConfig	24	static
+../Core/Src/uart_comm.c:76:6:UART_Comm_Init	16	static
+../Core/Src/uart_comm.c:90:6:UART_SendString	24	static
+../Core/Src/uart_comm.c:103:6:UART_SendImpedanceData	336	static
+../Core/Src/uart_comm.c:156:6:UART_RxCpltCallback	16	static
+../Core/Src/uart_comm.c:179:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/uart_comm.c:188:6:UART_ProcessCommand	160	static,ignoring_inline_asm

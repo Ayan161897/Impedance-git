@@ -57,6 +57,7 @@ void Process_SetStartFrequency(uint32_t value);
 void Process_SetStopFrequency(uint32_t value);
 void Process_SetStepFrequency(uint32_t value);
 void Process_SetFeedbackResistor(float value);
+void Process_SetSweepConfig(uint32_t start, uint32_t stop, uint32_t step);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -64,13 +65,12 @@ void Process_SetFeedbackResistor(float value);
 #define AD9833_FSYNC_GPIO_Port GPIOA
 #define W25Q32_CS_Pin GPIO_PIN_13
 #define W25Q32_CS_GPIO_Port GPIOB
-#define STATUS_LED_Pin GPIO_PIN_12
-#define STATUS_LED_GPIO_Port GPIOB
+
 
 /* USER CODE BEGIN Private defines */
 /* Frequency Sweep Settings */
 
-#define SWEEP_START_FREQUENCY     1000U
+#define SWEEP_START_FREQUENCY     5000U
 #define SWEEP_STOP_FREQUENCY      100000U
 #define SWEEP_STEP_FREQUENCY      1000U
 
