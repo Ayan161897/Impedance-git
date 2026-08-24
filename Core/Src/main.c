@@ -445,8 +445,11 @@ int main(void)
                 break;
             }
 
-            /* Overflow-safe increment: clamp to stop if next step overshoots */
-            if(freq > sweep_stop_frequency - sweep_step_frequency)
+            /* Overflow-safe increment: clamp to stop if next step overshoots.
+               (freq < sweep_stop_frequency here, so this subtraction cannot
+               underflow, unlike computing sweep_stop_frequency - sweep_step_frequency
+               directly when step > span.) */
+            if(sweep_step_frequency >= (sweep_stop_frequency - freq))
             {
                 freq = sweep_stop_frequency;
             }
